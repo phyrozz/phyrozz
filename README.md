@@ -19,8 +19,8 @@
 - [x] Java
 - [x] Dart
 - [x] PHP
-- [ ] TS
-- [ ] Rust
+- [x] TS
+- [x] Rust
 - [ ] Swift
 - [ ] Perl
 - [ ] Kotlin
