@@ -20,6 +20,7 @@
 - [x] Svelte
 - [ ] Angular
 - [ ] ASP.NET
+- [ ] Spring
 - [ ] Ruby on Rails
 - [ ] Flask
 - [ ] Symfony
