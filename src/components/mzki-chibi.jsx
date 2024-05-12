@@ -84,7 +84,7 @@ function MzkiChibi() {
         ref={mzkiRef}
         id="mzki"
         className="w-64"
-        src="/mzki_chibi.png"
+        src="/phyrozz/src/assets/mzki_chibi.png"
         alt="Mzki Chibi"
         onClick={handleOnChibiClick}
       />

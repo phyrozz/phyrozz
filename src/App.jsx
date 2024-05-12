@@ -61,7 +61,7 @@ function App() {
                 Yup, that's me
               </div>
               <div>
-                <img className="w-96 aspect-square object-top object-cover shadow-xl cursor-pointer transition-all hover:rotate-3 hover:scale-110 hover:shadow-2xl" src="/me.jpg" alt="Cosplay picture of me." />
+                <img className="w-96 aspect-square object-top object-cover shadow-xl cursor-pointer transition-all hover:rotate-3 hover:scale-110 hover:shadow-2xl" src="/phyrozz/src/assets/me.jpg" alt="Cosplay picture of me." />
               </div>
             </div>
           </div>
