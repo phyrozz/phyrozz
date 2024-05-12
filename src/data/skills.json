@@ -1,0 +1,92 @@
+[
+    {
+        "name": "React",
+        "progress": 70,
+        "iconSrc": "/atom.png",
+        "iconAlt": "React Icon"
+    },
+    {
+        "name": "Next.js",
+        "progress": 75,
+        "iconSrc": "/nextjs.png",
+        "iconAlt": "Next.js Icon"
+    },
+    {
+        "name": "Node.js",
+        "progress": 50,
+        "iconSrc": "/nodejs.png",
+        "iconAlt": "Node.js Icon"
+    },
+    {
+        "name": "Flutter",
+        "progress": 75,
+        "iconSrc": "/flutter.png",
+        "iconAlt": "Flutter Icon"
+    },
+    {
+        "name": "Javascript",
+        "progress": 80,
+        "iconSrc": "/js.png",
+        "iconAlt": "Javascript Icon"
+    },
+    {
+        "name": "HTML/CSS",
+        "progress": 80,
+        "iconSrc": "/html-5.png",
+        "iconAlt": "HTML/CSS Icon"
+    },
+    {
+        "name": "Python",
+        "progress": 70,
+        "iconSrc": "/python.png",
+        "iconAlt": "Python Icon"
+    },
+    {
+        "name": "Java",
+        "progress": 40,
+        "iconSrc": "/java.png",
+        "iconAlt": "Java Icon"
+    },
+    {
+        "name": "C",
+        "progress": 20,
+        "iconSrc": "/c.png",
+        "iconAlt": "C Icon"
+    },
+    {
+        "name": "C++",
+        "progress": 35,
+        "iconSrc": "/cpp.png",
+        "iconAlt": "C++ Icon"
+    },
+    {
+        "name": "Go",
+        "progress": 10,
+        "iconSrc": "/go-lang.png",
+        "iconAlt": "Go Icon"
+    },
+    {
+        "name": "MySQL",
+        "progress": 70,
+        "iconSrc": "/mysql.png",
+        "iconAlt": "MySQL Icon"
+    },
+    {
+        "name": "PHP",
+        "progress": 70,
+        "iconSrc": "/php.png",
+        "iconAlt": "PHP Icon"
+    },
+    {
+        "name": "PostgreSQL",
+        "progress": 75,
+        "iconSrc": "/postgre.png",
+        "iconAlt": "PostgreSQL Icon"
+    },
+    {
+        "name": "Typescript",
+        "progress": 65,
+        "iconSrc": "/typescript.png",
+        "iconAlt": "Typescript Icon"
+    }
+]
