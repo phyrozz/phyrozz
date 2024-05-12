@@ -1,16 +1,20 @@
 import React from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
+import Draggable from 'gsap/Draggable'
 
 function MzkiChibi() {
+  gsap.registerPlugin(Draggable)
   gsap.registerPlugin(useGSAP)
 
   const mzkiRef = React.useRef(null)
   const bubbleTextRef = React.useRef(null)
+  const containerRef = React.useRef(null)
 
   useGSAP(() => {
     const mzki = mzkiRef.current
     const bubbleText = bubbleTextRef.current
+    const container = containerRef.current
 
     const bubbleTextAnimation = () => {
       // Hide the bubble text initially
@@ -51,6 +55,20 @@ function MzkiChibi() {
     bubbleTextAnimation()
     jumpAnimation()
 
+    Draggable.create(container, {
+      bounds: "#page",
+      inertia: true,
+      type: "x,y",
+      liveSnap: {
+        points: [
+          { x: 0, y: 0 },
+          { x: 100, y: 0 },
+          { x: 200, y: 50 },
+        ],
+        radius: 15,
+      },
+    })
+
     return () => {
       gsap.killTweensOf(mzki)
       gsap.killTweensOf(bubbleText)
@@ -78,7 +96,7 @@ function MzkiChibi() {
   }
 
   return (
-    <div className="fixed bottom-4 right-4 z-30 cursor-pointer">
+    <div ref={containerRef} className="fixed bottom-4 right-4 z-30 cursor-pointer">
       <div ref={bubbleTextRef} className="md:-left-40 -left-24 top-4 absolute bg-white md:text-lg text-xs md:py-5 py-2 md:px-10 px-5 z-10 rounded-full font-patrickhand font-bold shadow-lg">Scroll/swipe down to get started!</div>
       <img
         ref={mzkiRef}

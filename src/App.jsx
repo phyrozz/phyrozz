@@ -36,7 +36,7 @@ function App() {
   const sortedSkills = skills.sort((a, b) => b.progress - a.progress)
 
   return (
-    <div className="cursor-default">
+    <div id="page" className="cursor-default">
       <MzkiChibi />
       <Navbar />
       <div className="font-patrickhand h-[600vh]">
