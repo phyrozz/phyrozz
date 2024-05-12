@@ -2,91 +2,97 @@
     {
         "name": "React",
         "progress": 70,
-        "iconSrc": "/phyrozz/src/assets/atom.png",
+        "iconSrc": "atom.png",
         "iconAlt": "React Icon"
     },
     {
         "name": "Next.js",
         "progress": 75,
-        "iconSrc": "/phyrozz/src/assets/nextjs.png",
+        "iconSrc": "nextjs.png",
         "iconAlt": "Next.js Icon"
     },
     {
         "name": "Node.js",
         "progress": 50,
-        "iconSrc": "/phyrozz/src/assets/nodejs.png",
+        "iconSrc": "nodejs.png",
         "iconAlt": "Node.js Icon"
     },
     {
         "name": "Flutter",
         "progress": 75,
-        "iconSrc": "/phyrozz/src/assets/flutter.png",
+        "iconSrc": "flutter.png",
         "iconAlt": "Flutter Icon"
     },
     {
         "name": "Javascript",
         "progress": 80,
-        "iconSrc": "/phyrozz/src/assets/js.png",
+        "iconSrc": "js.png",
         "iconAlt": "Javascript Icon"
     },
     {
         "name": "HTML/CSS",
         "progress": 80,
-        "iconSrc": "/phyrozz/src/assets/html-5.png",
+        "iconSrc": "html-5.png",
         "iconAlt": "HTML/CSS Icon"
     },
     {
         "name": "Python",
         "progress": 70,
-        "iconSrc": "/phyrozz/src/assets/python.png",
+        "iconSrc": "python.png",
         "iconAlt": "Python Icon"
     },
     {
         "name": "Java",
         "progress": 40,
-        "iconSrc": "/phyrozz/src/assets/java.png",
+        "iconSrc": "java.png",
         "iconAlt": "Java Icon"
     },
     {
         "name": "C",
         "progress": 20,
-        "iconSrc": "/phyrozz/src/assets/c.png",
+        "iconSrc": "c.png",
         "iconAlt": "C Icon"
     },
     {
         "name": "C++",
         "progress": 35,
-        "iconSrc": "/phyrozz/src/assets/cpp.png",
+        "iconSrc": "cpp.png",
         "iconAlt": "C++ Icon"
     },
     {
         "name": "Go",
         "progress": 10,
-        "iconSrc": "/phyrozz/src/assets/go-lang.png",
+        "iconSrc": "go-lang.png",
         "iconAlt": "Go Icon"
     },
     {
         "name": "MySQL",
         "progress": 70,
-        "iconSrc": "/phyrozz/src/assets/mysql.png",
+        "iconSrc": "mysql.png",
         "iconAlt": "MySQL Icon"
     },
     {
         "name": "PHP",
         "progress": 70,
-        "iconSrc": "/phyrozz/src/assets/php.png",
+        "iconSrc": "php.png",
         "iconAlt": "PHP Icon"
     },
     {
         "name": "PostgreSQL",
         "progress": 75,
-        "iconSrc": "/phyrozz/src/assets/postgre.png",
+        "iconSrc": "postgre.png",
         "iconAlt": "PostgreSQL Icon"
     },
     {
         "name": "Typescript",
         "progress": 65,
-        "iconSrc": "/phyrozz/src/assets/typescript.png",
+        "iconSrc": "typescript.png",
         "iconAlt": "Typescript Icon"
+    },
+    {
+        "name": "MongoDB",
+        "progress": 35,
+        "iconSrc": "mongodb.svg",
+        "iconAlt": "MongoDB Icon"
     }
 ]

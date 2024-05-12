@@ -46,7 +46,7 @@ function App() {
       <div id="about-me" className="bg-pink-200 h-[200vh]">
         <div className="sticky top-0 p-10 flex flex-col justify-center items-center gap-10 h-screen">
           <div className="w-full">
-            <h1 className="text-6xl font-patrickhand text-white drop-shadow-lg text-center font-bold">All about me</h1>
+            <h1 className="text-6xl font-patrickhand text-white drop-shadow-lg text-center font-bold">About Me</h1>
           </div>
 
           <div className="bg-white rounded-xl p-10 shadow-2xl font-patrickhand md:text-xl grid grid-cols-5 gap-10 md:text-left text-center w-full max-w-full md:max-w-[850px] transition ease-soft-spring hover:scale-105">
@@ -61,7 +61,7 @@ function App() {
                 Yup, that's me
               </div>
               <div>
-                <img className="w-96 aspect-square object-top object-cover shadow-xl cursor-pointer transition-all hover:rotate-3 hover:scale-110 hover:shadow-2xl" src="/phyrozz/src/assets/me.jpg" alt="Cosplay picture of me." />
+                <img className="w-96 aspect-square object-top object-cover shadow-xl cursor-pointer transition-all hover:rotate-3 hover:scale-110 hover:shadow-2xl" src="phyrozz/me.jpg" alt="Cosplay picture of me." />
               </div>
             </div>
           </div>

@@ -16,8 +16,8 @@ function MzkiChibi() {
       // Hide the bubble text initially
       gsap.set(bubbleText, { opacity: 0 })
 
-      // Show the bubble text after 1 second
-      gsap.to(bubbleText, { opacity: 1, duration: 0.25, delay: 2, ease: "expo.out" })
+      // Show the bubble text after 1.5 second
+      gsap.to(bubbleText, { opacity: 1, duration: 0.25, delay: 1.5, ease: "expo.out" })
 
       // Hide the bubble text after 5 seconds
       setTimeout(() => {
@@ -84,7 +84,7 @@ function MzkiChibi() {
         ref={mzkiRef}
         id="mzki"
         className="w-64"
-        src="/phyrozz/src/assets/mzki_chibi.png"
+        src="phyrozz/mzki_chibi.png"
         alt="Mzki Chibi"
         onClick={handleOnChibiClick}
       />
