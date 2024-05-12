@@ -79,12 +79,12 @@ function MzkiChibi() {
 
   return (
     <div className="fixed bottom-4 right-4 z-30 cursor-pointer">
-      <div ref={bubbleTextRef} className="-left-40 top-4 absolute bg-white py-5 px-10 z-10 rounded-full font-patrickhand font-bold shadow-lg">Scroll/swipe down to get started!</div>
+      <div ref={bubbleTextRef} className="md:-left-40 -left-24 top-4 absolute bg-white md:text-lg text-xs md:py-5 py-2 md:px-10 px-5 z-10 rounded-full font-patrickhand font-bold shadow-lg">Scroll/swipe down to get started!</div>
       <img
         ref={mzkiRef}
         id="mzki"
-        className="w-64"
-        src="phyrozz/mzki_chibi.png"
+        className="md:w-64 w-32"
+        src="mzki_chibi.png"
         alt="Mzki Chibi"
         onClick={handleOnChibiClick}
       />

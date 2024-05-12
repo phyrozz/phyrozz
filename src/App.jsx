@@ -44,12 +44,12 @@ function App() {
       </div>
 
       <div id="about-me" className="bg-pink-200 h-[200vh]">
-        <div className="sticky top-0 p-10 flex flex-col justify-center items-center gap-10 h-screen">
+        <div className="sticky top-0 md:p-10 p-5 flex flex-col justify-center items-center gap-10 h-screen">
           <div className="w-full">
             <h1 className="text-6xl font-patrickhand text-white drop-shadow-lg text-center font-bold">About Me</h1>
           </div>
 
-          <div className="bg-white rounded-xl p-10 shadow-2xl font-patrickhand md:text-xl grid grid-cols-5 gap-10 md:text-left text-center w-full max-w-full md:max-w-[850px] transition ease-soft-spring hover:scale-105">
+          <div className="bg-white rounded-xl md:p-10 p-5 shadow-2xl font-patrickhand md:text-xl grid grid-cols-5 gap-10 md:text-left text-center w-full max-w-full md:max-w-[850px] transition ease-soft-spring hover:scale-105">
             <div className="md:col-span-3 col-span-5 flex flex-col gap-5 cursor-default">
               <p>I'm <b><u>Joshua Malabanan</u></b>, but you can call me Phyrozz, Reimu, or just plain ol' Josh!</p>
               <p>I make web applications, mostly specializing in back-end. I also do front-end coding, though I'm not that really creative on designing web pages.</p>
@@ -61,7 +61,7 @@ function App() {
                 Yup, that's me
               </div>
               <div>
-                <img className="w-96 aspect-square object-top object-cover shadow-xl cursor-pointer transition-all hover:rotate-3 hover:scale-110 hover:shadow-2xl" src="phyrozz/me.jpg" alt="Cosplay picture of me." />
+                <img className="w-96 aspect-square object-top object-cover shadow-xl cursor-pointer transition-all hover:rotate-3 hover:scale-110 hover:shadow-2xl" src="me.jpg" alt="Cosplay picture of me." />
               </div>
             </div>
           </div>
@@ -81,7 +81,7 @@ function App() {
             <h1 className="text-6xl font-patrickhand text-white drop-shadow-lg text-center font-bold">My Skills</h1>
           </div>
 
-          <div className="flex flex-row flex-wrap w-full gap-10 justify-center">
+          <div className="flex flex-row flex-wrap w-full md:gap-10 gap-5 justify-center">
             {sortedSkills.map(skill => (
               <SkillsContainer key={skill.name} name={skill.name} progress={skill.progress} iconSrc={skill.iconSrc} iconAlt={skill.iconAlt} />
             ))}
