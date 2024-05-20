@@ -1,0 +1,32 @@
+[
+    {
+        "name": "PUPSRC-OTMS",
+        "description": "A full-stack web application for managing student transactions for PUPSRC's faculties online. Powered by Bootstrap and PHP.",
+        "githubLink": "https://github.com/phyrozz/PUPSRC-OTMS",
+        "image": "otms.png"
+    },
+    {
+        "name": "e-Dukaxon",
+        "description": "Android application for training and assessing Filipino dyslexics. Written in Flutter/Dart.",
+        "githubLink": "https://github.com/phyrozz/e-Dukaxon",
+        "image": "edukaxon.png"
+    },
+    {
+        "name": "PUPSRC-iMHealth",
+        "description": "Full-stack web application for monitoring and analyzing mental health assessments of PUPSRC students. Written in Next.js.",
+        "githubLink": "https://github.com/phyrozz/PUPSRC-OTMS",
+        "image": "imhealth.jpg"
+    },
+    {
+        "name": "Philippine Travel Maps Collection",
+        "description": "Collection of maps of different Philippine provinces that users can add travel status on and share on social media. Written in React.",
+        "githubLink": "https://github.com/phyrozz/my-ph-travel-maps-collection",
+        "image": "phmap.png"
+    },
+    {
+        "name": "Kessoku Band Fan-site",
+        "description": "Website in dedication to the anime, Bocchi the Rock. Written in Jquery.",
+        "githubLink": "https://github.com/phyrozz/KESSOKU-BAND",
+        "image": "bocchi.png"
+    }
+]

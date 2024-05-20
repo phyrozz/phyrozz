@@ -7,11 +7,15 @@ import { Progress, Button } from '@nextui-org/react'
 import skills from "./data/skills.json"
 import SkillsContainer from './components/skills-container'
 import MzkiChibi from './components/mzki-chibi'
+import ProjectsContainer from './components/projects-container'
 
 function App() {
   const [text, setText] = React.useState("Hi!")
 
   React.useEffect(() => {
+    // scroll to top when the page is refreshed
+    window.history.scrollRestoration = 'manual'
+
     const handleScroll = () => {
       const scrollPosition = window.scrollY
       const offset1 = 1000
@@ -61,7 +65,7 @@ function App() {
                 Yup, that's me
               </div>
               <div>
-                <img className="w-96 aspect-square object-top object-cover shadow-xl cursor-pointer transition-all hover:rotate-3 hover:scale-110 hover:shadow-2xl" src="me.jpg" alt="Cosplay picture of me." />
+                <img className="w-96 aspect-square object-top object-cover shadow-xl cursor-pointer transition-all hover:rotate-3 hover:scale-110 hover:shadow-2xl" src="also_me.jpg" alt="Cosplay picture of me." />
               </div>
             </div>
           </div>
@@ -85,6 +89,18 @@ function App() {
             {sortedSkills.map(skill => (
               <SkillsContainer key={skill.name} name={skill.name} progress={skill.progress} iconSrc={skill.iconSrc} iconAlt={skill.iconAlt} />
             ))}
+          </div>
+        </div>
+      </div>
+
+      <div id="projects" className="bg-pink-200 h-[500vh]">
+        <div className="sticky top-0 p-10 flex flex-col justify-center items-center gap-10 min-h-screen">
+          <div className="w-full pt-10">
+            <h1 className="text-6xl font-patrickhand text-white drop-shadow-lg text-center font-bold">Projects</h1>
+          </div>
+
+          <div className="flex flex-row flex-wrap w-full md:gap-10 gap-5 justify-center">
+            <ProjectsContainer />
           </div>
         </div>
       </div>

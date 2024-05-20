@@ -20,13 +20,8 @@ function MzkiChibi() {
       // Hide the bubble text initially
       gsap.set(bubbleText, { opacity: 0 })
 
-      // Show the bubble text after 1.5 second
-      gsap.to(bubbleText, { opacity: 1, duration: 0.25, delay: 1.5, ease: "expo.out" })
-
-      // Hide the bubble text after 5 seconds
-      setTimeout(() => {
-        gsap.to(bubbleText, { opacity: 0, duration: 0.25, ease: "expo.out" })
-      }, 5000)
+      // Show the bubble text after 1 second
+      gsap.to(bubbleText, { opacity: 1, duration: 0.25, delay: 1, ease: "expo.out" })
     }
 
     const jumpAnimation = () => {
@@ -69,9 +64,21 @@ function MzkiChibi() {
       },
     })
 
+    const handleScroll = () => {
+      // hide the bubble text on scroll
+      if (window.scrollY > 4000) {
+        gsap.to(bubbleText, { opacity: 0, duration: 0.25, ease: 'expo.out' })
+        // remove the scroll event listener after hiding the text
+        window.removeEventListener('scroll', handleScroll)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+
     return () => {
       gsap.killTweensOf(mzki)
       gsap.killTweensOf(bubbleText)
+      window.removeEventListener('scroll', handleScroll);
     }
   })
 
