@@ -7,7 +7,7 @@
 - 🔭 Pursuing Web Development 🔭
 - 🧑‍💻 Full-stack > QA 🧑‍💻
 
-**phyrozz.github.io/phyrozz/**
+[**phyrozz.github.io/phyrozz/**](phyrozz.github.io/phyrozz/)
 
 ## My 2024 Goals
 ### Learned Frameworks:
