@@ -1,28 +1,11 @@
 # Hi
 
-![doge](https://media.tenor.com/9QdSGSxGbbMAAAAd/doge-good-dog.gif)
+![doge](https://media.tenor.com/KNH5fzru2cMAAAAi/touhou-fumo-reimu.gif)
 
-- 🏫 Currently studying BSIT in PUP - Santa Rosa 🏫
+- 🏫 Took BSIT in PUP - Santa Rosa 🏫
 - 🌱 Mastering back-end frameworks 🌱
-- 🔭 Pursuing Web Development 🔭
+- 🔭 Pursuing Angular Development 🔭
 - 🧑‍💻 Full-stack > QA 🧑‍💻
+- ⛩️ I love Touhou ⛩️
 
 [**phyrozz.github.io/phyrozz/**](https://phyrozz.github.io/phyrozz/)
-
-## My 2024 Goals
-### Learned Frameworks:
-- [ ] Angular
-- [ ] ASP.NET
-- [ ] Spring
-- [ ] Ruby on Rails
-- [ ] Flask
-- [ ] Symfony
-- [ ] CodeIgniter
-- [ ] Meteor
-
-### Learned Languages:
-- [ ] Swift
-- [ ] Perl
-- [ ] Kotlin
-- [ ] Ruby
-- [ ] Objective-C
