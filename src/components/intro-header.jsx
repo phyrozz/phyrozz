@@ -22,7 +22,7 @@ function IntroHeader({ text }) {
 
   return (
     <div ref={container} className="flex flex-col h-screen w-full bg-pink-200 justify-center items-center sticky top-0">
-      <h1 className="text-center text-6xl text-white drop-shadow-lg font-bold">{text}</h1>
+      <h1 className="text-center text-6xl text-pink-50 drop-shadow-lg font-bold">{text}</h1>
     </div>
   )
 }

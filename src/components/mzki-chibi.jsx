@@ -10,6 +10,7 @@ function MzkiChibi() {
   const mzkiRef = React.useRef(null)
   const bubbleTextRef = React.useRef(null)
   const containerRef = React.useRef(null)
+  const [isFlipped, setIsFlipped] = React.useState(false)
 
   useGSAP(() => {
     const mzki = mzkiRef.current
@@ -85,6 +86,16 @@ function MzkiChibi() {
   const handleOnChibiClick = () => {
     const mzki = mzkiRef.current
 
+    // flip
+    gsap.to(mzki, {
+      rotationY: isFlipped ? 180 : 0, // flip the image
+      duration: 0.15, // duration of flip
+      ease: "easeIn", 
+      onComplete: () => {
+        setIsFlipped(!isFlipped)
+      },
+    })
+
     // generate random jump distance
     const jumpDistance = Math.random() * 50 + 25
 
@@ -104,7 +115,7 @@ function MzkiChibi() {
 
   return (
     <div ref={containerRef} className="fixed bottom-4 right-4 z-30 cursor-pointer">
-      <div ref={bubbleTextRef} className="md:-left-40 -left-24 top-4 absolute bg-white md:text-lg text-xs md:py-5 py-2 md:px-10 px-5 z-10 rounded-full font-patrickhand font-bold shadow-lg">Scroll/swipe down to get started!</div>
+      <div ref={bubbleTextRef} className="md:-left-40 -left-24 top-4 absolute bg-white md:text-lg text-xs md:py-5 py-2 md:px-10 px-5 z-10 rounded-full font-patrickhand font-bold shadow-lg">Keep on scrolling/swiping down to see more!</div>
       <img
         ref={mzkiRef}
         id="mzki"
