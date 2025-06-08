@@ -6,6 +6,6 @@
 - 🌱 Mastering back-end frameworks 🌱
 - 🔭 Pursuing Angular Development 🔭
 - 🧑‍💻 Full-stack > QA 🧑‍💻
-- ⛩️ I love Touhou ⛩️
+- ⛩️ Shrine Maiden of the Hakurei Shrine ⛩️
 
 [**phyrozz.github.io/phyrozz/**](https://phyrozz.github.io/phyrozz/)
