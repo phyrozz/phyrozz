@@ -1,26 +1,166 @@
 @import "tailwindcss";
 
+/* ============================================================
+   pastel Portfolio – Design Tokens & Global Styles
+   Palette inspired by pastel's soft pastels and warm cream tones.
+   ============================================================ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Core palette */
+  --cream:        #fdf6ec;
+  --cream-dark:   #f5e8d0;
+  --blush:        #f9d0d0;
+  --blush-dark:   #f0b8b8;
+  --mint:         #c8e8d0;
+  --mint-dark:    #a8d4b4;
+  --lavender:     #d8cef0;
+  --lavender-dark:#bbaee0;
+  --sky:          #c4dff0;
+  --sky-dark:     #a0c8e4;
+  --honey:        #f9c84a;
+  --honey-dark:   #e8a820;
+  --brown:        #7c5c3c;
+  --brown-light:  #b08060;
+  --ink:          #3d2c1e;
+
+  --background:   var(--cream);
+  --foreground:   var(--ink);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-cream:          var(--cream);
+  --color-cream-dark:     var(--cream-dark);
+  --color-blush:          var(--blush);
+  --color-blush-dark:     var(--blush-dark);
+  --color-mint:           var(--mint);
+  --color-mint-dark:      var(--mint-dark);
+  --color-lavender:       var(--lavender);
+  --color-lavender-dark:  var(--lavender-dark);
+  --color-sky:            var(--sky);
+  --color-sky-dark:       var(--sky-dark);
+  --color-honey:          var(--honey);
+  --color-honey-dark:     var(--honey-dark);
+  --color-brown:          var(--brown);
+  --color-brown-light:    var(--brown-light);
+  --color-ink:            var(--ink);
+  --color-background:     var(--background);
+  --color-foreground:     var(--foreground);
+  --font-sans:            var(--font-nunito);
+  --font-display:         var(--font-pacifico);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* ============================================================
+   Base body
+   ============================================================ */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-nunito), 'Nunito', sans-serif;
+  overflow-x: hidden;
+  /* Soft paw-print polka-dot background texture */
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(249, 208, 208, 0.35) 0 6px, transparent 6px),
+    radial-gradient(circle at 80% 70%, rgba(200, 232, 208, 0.35) 0 6px, transparent 6px),
+    radial-gradient(circle at 55% 45%, rgba(216, 206, 240, 0.30) 0 4px, transparent 4px);
+  background-size: 120px 120px;
 }
+
+/* ============================================================
+   pastel decorative helpers
+   ============================================================ */
+
+/* Bouncy hover animation */
+@keyframes pastel-bounce {
+  0%, 100% { transform: translateY(0); }
+  40%       { transform: translateY(-8px); }
+  60%       { transform: translateY(-4px); }
+}
+
+@keyframes pastel-spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-3deg); }
+  50%       { transform: rotate(3deg); }
+}
+
+.pastel-bounce { animation: pastel-bounce 0.6s ease; }
+.pastel-float  { animation: float 3s ease-in-out infinite; }
+.pastel-wiggle { animation: wiggle 1s ease-in-out infinite; }
+
+/* Dotted border used on cards */
+.pastel-card {
+  border: 2px dashed var(--brown-light);
+  border-radius: 1.25rem;
+  background: white;
+  box-shadow: 4px 4px 0 var(--cream-dark);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.pastel-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--cream-dark);
+}
+
+/* Section heading underline squiggle */
+.pastel-heading {
+  display: inline-block;
+  position: relative;
+  font-family: var(--font-pacifico), cursive;
+  color: var(--brown);
+}
+.pastel-heading::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 4px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--honey) 0 8px,
+    transparent 8px 12px
+  );
+  border-radius: 2px;
+}
+
+/* Badge pill */
+.pastel-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 10px;
+  border-radius: 9999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  border: 1.5px solid var(--brown-light);
+  background: var(--cream-dark);
+  color: var(--brown);
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+/* Soft section separator */
+.pastel-divider {
+  border: none;
+  height: 2px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--blush-dark) 0 10px,
+    transparent 10px 16px
+  );
+  margin: 2.5rem auto;
+  max-width: 80%;
+  border-radius: 2px;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar       { width: 8px; }
+::-webkit-scrollbar-track { background: var(--cream-dark); }
+::-webkit-scrollbar-thumb { background: var(--blush-dark); border-radius: 4px; }
