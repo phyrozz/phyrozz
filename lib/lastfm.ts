@@ -136,17 +136,21 @@ function pickBestImage(...sources: unknown[]) {
 async function lastFmRequest<T>(
   method: string,
   params: Record<string, string | number | undefined> = {},
+  options: { userParam?: 'user' | 'username' } = {},
 ): Promise<T> {
   const url = new URL(API_URL)
   const searchParams = new URLSearchParams({
     method,
     api_key: requireApiKey(),
-    user: getUsername(),
     format: 'json',
     ...Object.fromEntries(
       Object.entries(params).flatMap(([key, value]) => (value === undefined ? [] : [[key, String(value)]])),
     ),
   })
+
+  if (options.userParam) {
+    searchParams.set(options.userParam, getUsername())
+  }
 
   url.search = searchParams.toString()
 
@@ -197,6 +201,16 @@ function normalizeAlbum(album: LastFmNamedItem & { artist?: LastFmNamedItem | st
   }
 }
 
+function normalizeArtistInfo(artist: { image?: LastFmImage[] }) {
+  return pickImageUrl(artist.image)
+}
+
+function normalizeTrackInfo(track: { image?: LastFmImage[]; album?: LastFmNamedItem | string; artist?: LastFmNamedItem | string }) {
+  return {
+    imageUrl: pickBestImage(track, track.artist, track.album),
+  }
+}
+
 export async function loadLastFmTaste(): Promise<LastFmTaste> {
   const username = getUsername()
 
@@ -210,32 +224,32 @@ export async function loadLastFmTaste(): Promise<LastFmTaste> {
         url?: string
         image?: LastFmImage[]
       }
-    }>('user.getInfo', { user: username }),
+    }>('user.getInfo', { user: username }, { userParam: 'user' }),
     lastFmRequest<{
       recenttracks?: {
         track?: LastFmTrackItem[] | LastFmTrackItem
       }
-    }>('user.getRecentTracks', { user: username, limit: 8, extended: 1 }),
+    }>('user.getRecentTracks', { user: username, limit: 8, extended: 1 }, { userParam: 'user' }),
     lastFmRequest<{
       topartists?: {
         artist?: LastFmNamedItem[] | LastFmNamedItem
       }
-    }>('user.getTopArtists', { user: username, limit: 4, period: '12month' }),
+    }>('user.getTopArtists', { user: username, limit: 4, period: '12month' }, { userParam: 'user' }),
     lastFmRequest<{
       toptracks?: {
         track?: Array<LastFmTrackItem & { playcount?: string }> | (LastFmTrackItem & { playcount?: string })
       }
-    }>('user.getTopTracks', { user: username, limit: 4, period: '12month' }),
+    }>('user.getTopTracks', { user: username, limit: 4, period: '12month' }, { userParam: 'user' }),
     lastFmRequest<{
       topalbums?: {
         album?: Array<LastFmNamedItem & { artist?: LastFmNamedItem | string; playcount?: string }> | (LastFmNamedItem & { artist?: LastFmNamedItem | string; playcount?: string })
       }
-    }>('user.getTopAlbums', { user: username, limit: 4, period: '12month' }),
+    }>('user.getTopAlbums', { user: username, limit: 4, period: '12month' }, { userParam: 'user' }),
     lastFmRequest<{
       toptags?: {
         tag?: Array<{ name?: string; count?: string; url?: string }> | { name?: string; count?: string; url?: string }
       }
-    }>('user.getTopTags', { user: username, limit: 8 }),
+    }>('user.getTopTags', { user: username, limit: 8 }, { userParam: 'user' }),
   ])
 
   const profileJson = profileRes.status === 'fulfilled' ? profileRes.value : null
@@ -275,6 +289,41 @@ export async function loadLastFmTaste(): Promise<LastFmTaste> {
       : [tagsJson.toptags.tag]
     : []
 
+  const artistDetails = await Promise.allSettled(
+    topArtistsRaw.map((artist) =>
+      lastFmRequest<{ artist?: { image?: LastFmImage[] } }>(
+        'artist.getInfo',
+        {
+          artist: getText(artist),
+          autocorrect: 1,
+        },
+        { userParam: 'username' },
+      ),
+    ),
+  )
+
+  const trackDetails = await Promise.allSettled(
+    topTracksRaw.map((track) =>
+      lastFmRequest<{ track?: { image?: LastFmImage[]; album?: LastFmNamedItem | string; artist?: LastFmNamedItem | string } }>(
+        'track.getInfo',
+        {
+          artist: getText(track.artist),
+          track: getText(track),
+          autocorrect: 1,
+        },
+        { userParam: 'username' },
+      ),
+    ),
+  )
+
+  const artistImageOverrides = artistDetails.map((result) =>
+    result.status === 'fulfilled' ? normalizeArtistInfo(result.value.artist ?? {}) : null,
+  )
+
+  const trackImageOverrides = trackDetails.map((result) =>
+    result.status === 'fulfilled' ? normalizeTrackInfo(result.value.track ?? {}) : null,
+  )
+
   return {
     username,
     profile: profileJson?.user
@@ -290,11 +339,22 @@ export async function loadLastFmTaste(): Promise<LastFmTaste> {
         }
       : null,
     recentTracks: recentTracksRaw.slice(0, 8).map(normalizeTrack),
-    topArtists: topArtistsRaw.slice(0, 4).map(normalizeArtist),
-    topTracks: topTracksRaw.slice(0, 4).map((track) => ({
-      ...normalizeTrack(track),
-      playcount: toNumber((track as Record<string, unknown>).playcount),
-    })),
+    topArtists: topArtistsRaw.slice(0, 4).map((artist, index) => {
+      const normalized = normalizeArtist(artist)
+      return {
+        ...normalized,
+        imageUrl: artistImageOverrides[index] ?? normalized.imageUrl,
+      }
+    }),
+    topTracks: topTracksRaw.slice(0, 4).map((track, index) => {
+      const normalized = normalizeTrack(track)
+      const override = trackImageOverrides[index]
+      return {
+        ...normalized,
+        imageUrl: override?.imageUrl ?? normalized.imageUrl,
+        playcount: toNumber((track as Record<string, unknown>).playcount),
+      }
+    }),
     topAlbums: topAlbumsRaw.slice(0, 4).map((album) =>
       normalizeAlbum(album as LastFmNamedItem & { artist?: LastFmNamedItem | string; playcount?: string }),
     ),

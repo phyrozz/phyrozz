@@ -15,8 +15,8 @@ const pacifico = Pacifico({
 })
 
 export const metadata: Metadata = {
-  title: 'My Portfolio ✨',
-  description: 'A cute pastel-themed software engineering portfolio.',
+  title: 'Reimu Dev - Portfolio ✨',
+  description: 'My software engineering portfolio.',
 }
 
 export default function RootLayout({

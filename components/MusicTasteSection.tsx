@@ -47,12 +47,14 @@ function PanelShell({
   children: ReactNode
 }) {
   return (
-    <section className="pastel-card bg-white/85 p-4 shadow-sm">
+    <section className="pastel-card flex h-full min-h-[16rem] flex-col bg-white/85 p-4 shadow-sm sm:min-h-[18rem]">
       <div className="mb-3 flex items-center gap-2">
         <Icon size={16} className="text-honey-dark" aria-hidden="true" />
         <h3 className="text-sm font-extrabold uppercase tracking-[0.2em] text-brown">{title}</h3>
       </div>
-      {children}
+      <div className="flex-1 overflow-y-auto pr-1">
+        {children}
+      </div>
     </section>
   )
 }
@@ -196,7 +198,7 @@ export default function MusicTasteSection({ music }: Props) {
     return (
       <section
         id="music"
-        className="relative overflow-hidden cursor-default border-y-2 border-dashed border-sky-dark/30 bg-gradient-to-br from-sky/20 via-cream to-mint/20 px-3 py-14 sm:px-4 sm:py-16"
+        className="relative overflow-hidden cursor-default border-y-2 border-dashed border-sky-dark/30 bg-gradient-to-br from-sky/20 via-cream to-mint/20 px-2 py-12 sm:px-4 sm:py-16"
       >
         <div className="mx-auto max-w-6xl">
           <div className="mb-10 text-center">
@@ -216,10 +218,10 @@ export default function MusicTasteSection({ music }: Props) {
   return (
     <section
       id="music"
-      className="relative overflow-hidden cursor-default border-y-2 border-dashed border-sky-dark/30 bg-gradient-to-br from-sky/20 via-cream to-mint/20 px-3 py-14 sm:px-4 sm:py-16"
+      className="relative overflow-hidden cursor-default border-y-2 border-dashed border-sky-dark/30 bg-gradient-to-br from-sky/20 via-cream to-mint/20 px-2 py-12 sm:px-4 sm:py-16"
     >
       <div className="mx-auto max-w-6xl">
-        <div className="mb-8 text-center sm:mb-10">
+        <div className="mb-7 text-center sm:mb-10">
           <Music2 size={22} className="inline-block align-middle mr-2 text-sky-dark pastel-float sm:mr-3 sm:size-7" aria-hidden="true" />
           <h2 className="pastel-heading inline-block text-2xl sm:text-3xl md:text-4xl">Music Taste</h2>
           <Music2 size={22} className="inline-block align-middle ml-2 text-sky-dark pastel-float sm:ml-3 sm:size-7" style={{ animationDelay: '0.8s' }} aria-hidden="true" />
@@ -230,10 +232,10 @@ export default function MusicTasteSection({ music }: Props) {
           </p>
         </div>
 
-        <div className="grid gap-4">
-          <article className="pastel-card bg-white/85 p-4 shadow-sm sm:p-6">
+        <div className="grid gap-3 sm:gap-4">
+          <article className="pastel-card bg-white/85 p-3 shadow-sm sm:p-6">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-5">
-              <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-3xl border-2 border-sky-dark bg-cream shadow-sm sm:h-24 sm:w-24">
+              <div className="relative h-18 w-18 shrink-0 overflow-hidden rounded-3xl border-2 border-sky-dark bg-cream shadow-sm sm:h-24 sm:w-24">
                 {music.profile?.imageUrl ? (
                   <CuteImage
                     src={music.profile.imageUrl}
@@ -241,7 +243,7 @@ export default function MusicTasteSection({ music }: Props) {
                     fill
                     wrapperClassName="h-full w-full"
                     className="object-cover"
-                    sizes="(max-width: 640px) 80px, 96px"
+                    sizes="(max-width: 640px) 72px, 96px"
                   />
                 ) : (
                   <div className="flex h-full w-full items-center justify-center bg-cream-dark">
@@ -251,8 +253,8 @@ export default function MusicTasteSection({ music }: Props) {
               </div>
 
               <div className="min-w-0 flex-1">
-                <p className="text-[0.65rem] font-extrabold uppercase tracking-[0.24em] text-brown-light sm:text-xs sm:tracking-[0.28em]">Listening Profile</p>
-                <h3 className="mt-1 text-xl font-extrabold text-ink sm:text-2xl">{music.profile?.name ?? music.username}</h3>
+                <p className="text-[0.6rem] font-extrabold uppercase tracking-[0.22em] text-brown-light sm:text-xs sm:tracking-[0.28em]">Listening Profile</p>
+                <h3 className="mt-1 text-lg font-extrabold text-ink sm:text-2xl">{music.profile?.name ?? music.username}</h3>
                 {/* <p className="mt-2 max-w-prose text-sm leading-relaxed text-ink/70">
                   I use Last.fm to keep track of the artists, albums, and songs that are living on repeat.
                 </p> */}
@@ -275,8 +277,8 @@ export default function MusicTasteSection({ music }: Props) {
               </div>
             </div>
 
-            <div className="mt-4 rounded-3xl border border-sky-dark/20 bg-gradient-to-br from-cream to-cream-dark p-3 sm:mt-5 sm:p-4">
-              <div className="flex items-center gap-2 text-[0.65rem] font-extrabold uppercase tracking-[0.22em] text-brown-light sm:text-xs sm:tracking-[0.24em]">
+            <div className="mt-3 rounded-3xl border border-sky-dark/20 bg-gradient-to-br from-cream to-cream-dark p-3 sm:mt-5 sm:p-4">
+              <div className="flex items-center gap-2 text-[0.6rem] font-extrabold uppercase tracking-[0.2em] text-brown-light sm:text-xs sm:tracking-[0.24em]">
                 <Radio size={12} aria-hidden="true" />
                 {nowPlaying?.nowPlaying ? 'Now Playing' : 'Latest Spin'}
               </div>
@@ -313,7 +315,7 @@ export default function MusicTasteSection({ music }: Props) {
             </div>
 
             {music.topTags.length > 0 && (
-              <div className="mt-4 sm:mt-5">
+              <div className="mt-3 sm:mt-5">
                 <div className="mb-3 flex items-center gap-2 text-[0.65rem] font-extrabold uppercase tracking-[0.22em] text-brown-light sm:text-xs sm:tracking-[0.24em]">
                   <Sparkles size={12} aria-hidden="true" />
                   Favorite Tags
@@ -327,7 +329,7 @@ export default function MusicTasteSection({ music }: Props) {
             )}
           </article>
 
-          <div className="grid gap-3 sm:grid-cols-2 sm:gap-5">
+          <div className="grid gap-2 sm:grid-cols-2 sm:gap-5">
             <div className="sm:min-w-0">
               <PanelShell title="Top Artists" icon={Disc3}>
                 <div className="space-y-2">
