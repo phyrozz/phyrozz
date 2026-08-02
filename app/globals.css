@@ -91,9 +91,17 @@ body {
   50%       { transform: rotate(3deg); }
 }
 
+@keyframes cute-loader-bounce {
+  0%, 100% { transform: translateY(0); opacity: 0.6; }
+  50%      { transform: translateY(-4px); opacity: 1; }
+}
+
 .pastel-bounce { animation: pastel-bounce 0.6s ease; }
 .pastel-float  { animation: float 3s ease-in-out infinite; }
 .pastel-wiggle { animation: wiggle 1s ease-in-out infinite; }
+.cute-loader-dot { animation: cute-loader-bounce 1s ease-in-out infinite; }
+.cute-loader-dot:nth-child(2) { animation-delay: 0.12s; }
+.cute-loader-dot:nth-child(3) { animation-delay: 0.24s; }
 
 /* Dotted border used on cards */
 .pastel-card {

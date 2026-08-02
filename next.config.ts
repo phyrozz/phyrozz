@@ -5,10 +5,13 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        // AWS S3 presigned URLs – update the hostname to match your bucket region
-        // e.g. my-bucket.s3.ap-southeast-1.amazonaws.com
         protocol: 'https',
         hostname: '**.amazonaws.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'lastfm.freetls.fastly.net',
         pathname: '/**',
       },
     ],

@@ -1,9 +1,9 @@
 'use client'
 
 import { useCallback, useEffect, useState } from 'react'
-import Image from 'next/image'
 import { createPortal } from 'react-dom'
 import { ChevronLeft, ChevronRight, X } from 'lucide-react'
+import CuteImage from '@/components/CuteImage'
 
 interface Props {
   images: string[]
@@ -74,10 +74,11 @@ export default function ImageLightbox({
           className="relative w-full overflow-hidden rounded-2xl border-2 border-white/10 shadow-2xl"
           style={{ aspectRatio: '3 / 4', maxHeight: '70svh' }}
         >
-          <Image
+          <CuteImage
             src={url}
             alt={`${title} photo ${current + 1}`}
             fill
+            wrapperClassName="w-full h-full"
             className="bg-black/50 object-contain"
             sizes="(max-width: 768px) 100vw, 672px"
             priority
@@ -126,10 +127,11 @@ export default function ImageLightbox({
                 aria-label={`Go to photo ${i + 1}`}
                 aria-current={i === current}
               >
-                <Image
+                <CuteImage
                   src={imgUrl}
                   alt={`Thumbnail ${i + 1}`}
                   fill
+                  wrapperClassName="w-full h-full"
                   className="object-cover"
                   sizes="56px"
                 />

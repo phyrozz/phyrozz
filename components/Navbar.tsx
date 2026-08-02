@@ -1,15 +1,15 @@
 'use client'
 
 import { useState } from 'react'
-import { Home, Briefcase, Monitor, Palette, Sparkles, Menu, X, Lightbulb } from 'lucide-react'
+import { Home, Briefcase, Monitor, Palette, Sparkles, Menu, X, Music2 } from 'lucide-react'
 
 const NAV_LINKS = [
   { href: '#hero',     label: 'Home',       Icon: Home },
   { href: '#work',     label: 'Experience', Icon: Briefcase },
   { href: '#projects', label: 'Projects',   Icon: Monitor },
+  { href: '#music',    label: 'Music',      Icon: Music2 },
   { href: '#cosplays', label: 'Cosplays',   Icon: Sparkles },
   { href: '#hobbies',  label: 'Hobbies',    Icon: Palette },
-  // { href: '#tips',     label: 'Tips',       Icon: Lightbulb },
 ]
 
 export default function Navbar({ name }: { name?: string | null }) {

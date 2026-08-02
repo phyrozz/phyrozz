@@ -1,9 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
 import { Star, Heart, Flower2, Theater, CalendarDays, MapPin, Search } from 'lucide-react'
 import ImageLightbox from '@/components/ImageLightbox'
+import CuteImage from '@/components/CuteImage'
 
 interface Cosplay {
   id: number
@@ -114,10 +114,11 @@ function CosplayCard({ cosplay, featured = false, onOpen }: CardProps) {
         aria-label={`View ${cosplay.character_name} photos`}
       >
         {primaryUrl ? (
-          <Image
+          <CuteImage
             src={primaryUrl}
             alt={`${cosplay.character_name} cosplay`}
             fill
+            wrapperClassName="w-full h-full"
             className="object-cover"
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
           />
@@ -157,10 +158,11 @@ function CosplayCard({ cosplay, featured = false, onOpen }: CardProps) {
               className="relative w-10 h-10 shrink-0 rounded-md overflow-hidden border border-cream-dark hover:border-honey transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-honey"
               aria-label={`View photo ${i + 2}`}
             >
-              <Image
+              <CuteImage
                 src={url}
                 alt={`${cosplay.character_name} photo ${i + 2}`}
                 fill
+                wrapperClassName="w-full h-full"
                 className="object-cover"
                 sizes="40px"
               />

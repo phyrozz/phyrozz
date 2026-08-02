@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Home, Briefcase, Monitor, Palette, Sparkles, Lightbulb } from 'lucide-react'
+import { Home, Briefcase, Monitor, Palette, Sparkles, Music2 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
 interface Section {
@@ -14,9 +14,9 @@ const SECTIONS: Section[] = [
   { id: 'hero',     label: 'Home',       Icon: Home },
   { id: 'work',     label: 'Experience', Icon: Briefcase },
   { id: 'projects', label: 'Projects',   Icon: Monitor },
+  { id: 'music',    label: 'Music',      Icon: Music2 },
   { id: 'cosplays', label: 'Cosplays',   Icon: Sparkles },
   { id: 'hobbies',  label: 'Hobbies',    Icon: Palette },
-  // { id: 'tips',     label: 'Tips',       Icon: Lightbulb },
 ]
 
 export default function TableOfContents() {

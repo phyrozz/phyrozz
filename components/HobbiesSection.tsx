@@ -1,6 +1,6 @@
-import Image from 'next/image'
 import { Smile } from 'lucide-react'
 import { MushroomDeco, PawDeco } from '@/components/Decos'
+import CuteImage from '@/components/CuteImage'
 
 interface Hobby {
   id: number
@@ -34,7 +34,14 @@ export default function HobbiesSection({ hobbies }: Props) {
             <div key={hobby.id} className="pastel-card p-4 flex flex-col items-center text-center gap-3 cursor-default">
               {hobby.image_url ? (
                 <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-cream-dark">
-                  <Image src={hobby.image_url} alt={hobby.name} width={80} height={80} className="w-full h-full object-cover" />
+                  <CuteImage
+                    src={hobby.image_url}
+                    alt={hobby.name}
+                    width={80}
+                    height={80}
+                    wrapperClassName="w-full h-full"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
               ) : (
                 <div className="w-20 h-20 rounded-full bg-cream-dark border-2 border-cream flex items-center justify-center">

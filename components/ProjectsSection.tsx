@@ -1,6 +1,6 @@
-import Image from 'next/image'
 import { Star, GitBranch, Globe, Monitor } from 'lucide-react'
 import { FlowerDeco } from '@/components/Decos'
+import CuteImage from '@/components/CuteImage'
 
 interface Project {
   id: number
@@ -57,7 +57,14 @@ function ProjectCard({ project, featured = false }: { project: Project; featured
     <div className={`pastel-card p-5 flex flex-col gap-3 ${featured ? 'border-honey-dark bg-gradient-to-br from-cream to-cream-dark' : ''}`}>
       {project.image_url ? (
         <div className="w-full h-44 rounded-xl overflow-hidden border border-cream-dark">
-          <Image src={project.image_url} alt={project.title} width={600} height={176} className="w-full h-full object-cover" />
+          <CuteImage
+            src={project.image_url}
+            alt={project.title}
+            fill
+            sizes="(max-width: 768px) 100vw, 600px"
+            wrapperClassName="w-full h-full"
+            className="object-cover"
+          />
         </div>
       ) : (
         <div className="w-full h-44 rounded-xl bg-cream-dark flex items-center justify-center border border-cream-dark">

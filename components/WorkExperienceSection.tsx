@@ -1,5 +1,5 @@
-import Image from 'next/image'
 import { Briefcase, Building2 } from 'lucide-react'
+import CuteImage from '@/components/CuteImage'
 
 interface WorkExp {
   id: number
@@ -43,7 +43,14 @@ export default function WorkExperienceSection({ experiences }: Props) {
                 <div className="pastel-card flex-1 p-5 flex gap-4">
                   {exp.logo_url ? (
                     <div className="w-12 h-12 shrink-0 rounded-xl overflow-hidden border border-cream-dark bg-white flex items-center justify-center">
-                      <Image src={exp.logo_url} alt={`${exp.company} logo`} width={48} height={48} className="object-contain w-full h-full p-1" />
+                      <CuteImage
+                        src={exp.logo_url}
+                        alt={`${exp.company} logo`}
+                        width={48}
+                        height={48}
+                        wrapperClassName="w-full h-full"
+                        className="object-contain w-full h-full p-1"
+                      />
                     </div>
                   ) : (
                     <div className="w-12 h-12 shrink-0 rounded-xl bg-cream-dark border border-cream flex items-center justify-center">

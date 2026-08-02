@@ -14,16 +14,16 @@ import {
   WorkLoader,
   ProjectsLoader,
   HobbiesLoader,
+  MusicLoader,
   CosplaysLoader,
-  TipsLoader,
 } from '@/components/SectionLoaders'
 import {
   HeroSkeleton,
   WorkSkeleton,
   ProjectsSkeleton,
   HobbiesSkeleton,
+  MusicSkeleton,
   CosplaysSkeleton,
-  TipsSkeleton,
 } from '@/components/Skeletons'
 
 // The navbar needs the preferred display name on its left side. Fetch it
@@ -71,6 +71,13 @@ export default async function HomePage() {
 
         <hr className="pastel-divider" />
 
+        {/* -- Music Taste ------------------------------------------------ */}
+        <Suspense fallback={<MusicSkeleton />}>
+          <MusicLoader />
+        </Suspense>
+
+        <hr className="pastel-divider" />
+
         {/* -- Cosplays -------------------------------------------------- */}
         <Suspense fallback={<CosplaysSkeleton />}>
           <CosplaysLoader />
@@ -82,8 +89,6 @@ export default async function HomePage() {
         <Suspense fallback={<HobbiesSkeleton />}>
           <HobbiesLoader />
         </Suspense>
-
-        {/* <hr className="pastel-divider" /> */}
 
         {/* -- Tips & Mantras ------------------------------------------- */}
         {/* <Suspense fallback={<TipsSkeleton />}>

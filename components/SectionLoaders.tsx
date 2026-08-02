@@ -1,5 +1,5 @@
 /**
- * Async wrapper components — each fetches its own data independently.
+ * Async wrapper components - each fetches its own data independently.
  * Wrapped in Suspense on the page, so each streams in as it resolves.
  * Each section is also wrapped in SectionReveal for scroll transitions.
  */
@@ -9,11 +9,11 @@ import HeroSection from '@/components/HeroSection'
 import WorkExperienceSection from '@/components/WorkExperienceSection'
 import ProjectsSection from '@/components/ProjectsSection'
 import HobbiesSection from '@/components/HobbiesSection'
+import MusicTasteSection from '@/components/MusicTasteSection'
 import CosplaysSection from '@/components/CosplaysSection'
 import TipsMantrasSection from '@/components/TipsMantrasSection'
 import SectionReveal from '@/components/SectionReveal'
-
-// ── Hero ──────────────────────────────────────────────────────────────────────
+import { loadLastFmTaste } from '@/lib/lastfm'
 
 export async function HeroLoader() {
   try {
@@ -22,8 +22,8 @@ export async function HeroLoader() {
       db.query('SELECT * FROM socials ORDER BY sort_order ASC'),
     ])
 
-    const infoRow    = infoResult.status    === 'fulfilled' ? (infoResult.value.rows[0] ?? null) : null
-    const socialRows = socialsResult.status === 'fulfilled' ? socialsResult.value.rows            : []
+    const infoRow = infoResult.status === 'fulfilled' ? (infoResult.value.rows[0] ?? null) : null
+    const socialRows = socialsResult.status === 'fulfilled' ? socialsResult.value.rows : []
 
     const info = infoRow
       ? await (async () => {
@@ -40,7 +40,6 @@ export async function HeroLoader() {
       socialRows.map(async (r) => ({ ...r, icon_url: await getPresignedUrl(r.icon_key) })),
     )
 
-    // Hero fades in — no translate so the banner doesn't jump
     return (
       <SectionReveal variant="fade">
         <HeroSection info={info} socials={socials} />
@@ -54,8 +53,6 @@ export async function HeroLoader() {
     )
   }
 }
-
-// ── Work Experience ───────────────────────────────────────────────────────────
 
 export async function WorkLoader() {
   try {
@@ -79,8 +76,6 @@ export async function WorkLoader() {
   }
 }
 
-// ── Projects ──────────────────────────────────────────────────────────────────
-
 export async function ProjectsLoader() {
   try {
     const result = await db.query(
@@ -103,8 +98,6 @@ export async function ProjectsLoader() {
   }
 }
 
-// ── Hobbies ───────────────────────────────────────────────────────────────────
-
 export async function HobbiesLoader() {
   try {
     const result = await db.query('SELECT * FROM hobbies ORDER BY sort_order ASC')
@@ -125,7 +118,22 @@ export async function HobbiesLoader() {
   }
 }
 
-// ── Cosplays ──────────────────────────────────────────────────────────────────
+export async function MusicLoader() {
+  try {
+    const music = await loadLastFmTaste()
+    return (
+      <SectionReveal variant="fade-up">
+        <MusicTasteSection music={music} />
+      </SectionReveal>
+    )
+  } catch {
+    return (
+      <SectionReveal variant="fade-up">
+        <MusicTasteSection music={null} />
+      </SectionReveal>
+    )
+  }
+}
 
 export async function CosplaysLoader() {
   try {
@@ -151,8 +159,6 @@ export async function CosplaysLoader() {
     )
   }
 }
-
-// ── Tips & Mantras ────────────────────────────────────────────────────────────
 
 export async function TipsLoader() {
   try {
