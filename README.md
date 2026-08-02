@@ -8,4 +8,4 @@
 - 🧑‍💻 Full-stack > QA 🧑‍💻
 - ⛩️ Shrine Maiden of the Hakurei Shrine ⛩️
 
-[**phyrozz.github.io/phyrozz/**](https://phyrozz.github.io/phyrozz/)
+[**My Portfolio**](https://reimu-dev.online)
