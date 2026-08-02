@@ -329,8 +329,8 @@ export default function MusicTasteSection({ music }: Props) {
             )}
           </article>
 
-          <div className="grid gap-2 sm:grid-cols-2 sm:gap-5">
-            <div className="sm:min-w-0">
+          <div className="flex gap-2 overflow-x-auto pb-2 pr-1 sm:grid sm:grid-cols-2 sm:gap-5 sm:overflow-visible sm:pb-0 sm:pr-0">
+            <div className="w-[88vw] max-w-[22rem] shrink-0 sm:w-auto sm:max-w-none sm:min-w-0">
               <PanelShell title="Top Artists" icon={Disc3}>
                 <div className="space-y-2">
                   {music.topArtists.map((artist) => (
@@ -340,7 +340,7 @@ export default function MusicTasteSection({ music }: Props) {
               </PanelShell>
             </div>
 
-            <div className="sm:min-w-0">
+            <div className="w-[88vw] max-w-[22rem] shrink-0 sm:w-auto sm:max-w-none sm:min-w-0">
               <PanelShell title="Recent Tracks" icon={Radio}>
                 <div className="space-y-2">
                   {music.recentTracks.slice(0, 4).map((track) => (
@@ -350,7 +350,7 @@ export default function MusicTasteSection({ music }: Props) {
               </PanelShell>
             </div>
 
-            <div className="sm:min-w-0">
+            <div className="w-[88vw] max-w-[22rem] shrink-0 sm:w-auto sm:max-w-none sm:min-w-0">
               <PanelShell title="Top Albums" icon={Headphones}>
                 <div className="space-y-2">
                   {music.topAlbums.map((album) => (
@@ -360,7 +360,7 @@ export default function MusicTasteSection({ music }: Props) {
               </PanelShell>
             </div>
 
-            <div className="sm:min-w-0">
+            <div className="w-[88vw] max-w-[22rem] shrink-0 sm:w-auto sm:max-w-none sm:min-w-0">
               <PanelShell title="Top Tracks" icon={Flame}>
                 <div className="space-y-2">
                   {music.topTracks.map((track) => (
