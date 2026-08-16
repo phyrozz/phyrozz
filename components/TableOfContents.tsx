@@ -14,7 +14,7 @@ const SECTIONS: Section[] = [
   { id: 'hero',     label: 'Home',       Icon: Home },
   { id: 'work',     label: 'Experience', Icon: Briefcase },
   { id: 'projects', label: 'Projects',   Icon: Monitor },
-  { id: 'music',    label: 'Music',      Icon: Music2 },
+  { id: 'music',    label: 'Audio Diary',      Icon: Music2 },
   { id: 'cosplays', label: 'Cosplays',   Icon: Flower2 },
   // { id: 'hobbies',  label: 'Hobbies',    Icon: Palette },
 ]

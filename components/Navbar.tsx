@@ -8,7 +8,7 @@ const NAV_LINKS = [
   { href: '#hero', label: 'Home', Icon: Home },
   { href: '#work', label: 'Experience', Icon: Briefcase },
   { href: '#projects', label: 'Projects', Icon: Monitor },
-  { href: '#music', label: 'Music', Icon: Music2 },
+  { href: '#music', label: 'Audio Diary', Icon: Music2 },
   { href: '#cosplays', label: 'Cosplays', Icon: Flower2 },
   // { href: '#hobbies', label: 'Hobbies', Icon: Palette },
 ]

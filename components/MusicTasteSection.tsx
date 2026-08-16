@@ -6,6 +6,7 @@ import CuteImage from '@/components/CuteImage'
 import type { LastFmAlbum, LastFmArtist, LastFmTag, LastFmTaste, LastFmTrack, LastFmPeriod } from '@/lib/lastfm'
 import DropdownMenu from '@/components/DropdownMenu'
 import InfiniteList from '@/components/InfiniteList'
+import AudioDiary from '@/components/AudioDiary'
 
 interface Props {
   music: LastFmTaste | null
@@ -229,6 +230,7 @@ export default function MusicTasteSection({ music }: Props) {
   const [hasMore, setHasMore] = useState<Record<PanelKey, boolean>>({ artists: true, recent: true, albums: true, tracks: true })
   const [refreshedMusic, setRefreshedMusic] = useState<LastFmTaste | null>(null)
   const [refreshing, setRefreshing] = useState(false)
+  const [diaryRefreshKey, setDiaryRefreshKey] = useState(0)
   const currentMusic = refreshedMusic ?? music
 
   useEffect(() => {
@@ -259,6 +261,7 @@ export default function MusicTasteSection({ music }: Props) {
       const next = await response.json() as LastFmTaste
       setRefreshedMusic(next)
       setDatasets((current) => ({ ...current, overall: next }))
+      setDiaryRefreshKey((current) => current + 1)
       setPages({ artists: 1, recent: 1, albums: 1, tracks: 1 })
       setHasMore({ artists: true, recent: true, albums: true, tracks: true })
     } finally {
@@ -298,7 +301,7 @@ export default function MusicTasteSection({ music }: Props) {
         <div className="mx-auto max-w-6xl">
           <div className="mb-10 text-center">
             <Music2 size={28} className="inline-block align-middle mr-3 text-sky-dark pastel-float" aria-hidden="true" />
-            <h2 className="pastel-heading inline-block text-3xl md:text-4xl">Music Taste</h2>
+            <h2 className="pastel-heading inline-block text-3xl md:text-4xl">Audio Diary</h2>
             <Music2 size={28} className="inline-block align-middle ml-3 text-sky-dark pastel-float" style={{ animationDelay: '0.8s' }} aria-hidden="true" />
           </div>
           <MusicEmptyState />
@@ -323,7 +326,7 @@ export default function MusicTasteSection({ music }: Props) {
       <div className="mx-auto max-w-6xl">
         <div className="mb-7 text-center sm:mb-10">
           <Music2 size={22} className="inline-block align-middle mr-2 text-sky-dark pastel-float sm:mr-3 sm:size-7" aria-hidden="true" />
-          <h2 className="pastel-heading inline-block text-2xl sm:text-3xl md:text-4xl">Music Taste</h2>
+          <h2 className="pastel-heading inline-block text-2xl sm:text-3xl md:text-4xl">Audio Diary</h2>
           <Music2 size={22} className="inline-block align-middle ml-2 text-sky-dark pastel-float sm:ml-3 sm:size-7" style={{ animationDelay: '0.8s' }} aria-hidden="true" />
           <p className="mt-3 flex items-center justify-center gap-1.5 text-xs font-semibold text-brown-light sm:mt-4 sm:text-sm">
             <Important size={13} className="fill-honey text-honey" aria-hidden="true" />
@@ -425,6 +428,8 @@ export default function MusicTasteSection({ music }: Props) {
                 <p className="mt-3 text-sm text-ink/60">No recent tracks came back from Last.fm yet.</p>
               )}
             </div>
+
+            <AudioDiary tracks={currentMusic.recentTracks} refreshKey={diaryRefreshKey} />
 
             {currentMusic.topTags.length > 0 && (
               <div className="mt-3 sm:mt-5">
