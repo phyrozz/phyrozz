@@ -1,7 +1,7 @@
 import {
-  MapPin, Mail, Phone, Cake, Download, Sparkles,
-  GitBranch, Link,
-} from 'lucide-react'
+  MapPin, Mail, Phone, Cake, Download, Important,
+  GitBranch, Link, WindowsUpdate
+} from '@/components/XPIcon'
 import { StarDeco, HeartDeco, FlowerDeco, PawDeco } from '@/components/Decos'
 import CuteImage from '@/components/CuteImage'
 
@@ -82,10 +82,10 @@ export default function HeroSection({ info, socials }: Props) {
         <div className="max-w-2xl mx-auto">
 
           {/* Avatar */}
-          <div className="flex justify-center -mt-16 mb-4 relative z-10">
+          <div className="xp-start-avatar-wrap flex justify-center -mt-16 mb-4 relative z-10">
             {info?.avatar_url ? (
-              <div className="relative">
-                <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-honey shadow-lg bg-cream">
+              <div className="xp-start-avatar relative">
+                <div className="xp-start-avatar-frame w-32 h-32 rounded-full overflow-hidden border-4 border-honey shadow-lg bg-cream">
                   <CuteImage
                     src={info.avatar_url}
                     alt={`${info.full_name} avatar`}
@@ -98,8 +98,8 @@ export default function HeroSection({ info, socials }: Props) {
                 <StarDeco className="absolute -top-2 -right-2 w-7 h-7 pastel-wiggle" />
               </div>
             ) : (
-              <div className="w-32 h-32 rounded-full bg-cream-dark border-4 border-honey shadow-lg flex items-center justify-center">
-                <Sparkles size={48} className="text-honey" aria-hidden="true" />
+              <div className="xp-start-avatar-frame w-32 h-32 rounded-full bg-cream-dark border-4 border-honey shadow-lg flex items-center justify-center">
+                <Important size={48} className="text-honey" aria-hidden="true" />
               </div>
             )}
           </div>
@@ -118,9 +118,9 @@ export default function HeroSection({ info, socials }: Props) {
 
             {info?.tagline && (
               <p className="text-brown-light text-lg font-semibold mt-4 flex items-center justify-center gap-2">
-                <Sparkles size={16} className="text-honey" aria-hidden="true" />
+                <WindowsUpdate size={16} className="text-honey" aria-hidden="true" />
                 {info.tagline}
-                <Sparkles size={16} className="text-honey" aria-hidden="true" />
+                <WindowsUpdate size={16} className="text-honey" aria-hidden="true" />
               </p>
             )}
 
@@ -199,3 +199,5 @@ export default function HeroSection({ info, socials }: Props) {
     </section>
   )
 }
+
+

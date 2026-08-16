@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Star, Heart, Flower2, Theater, CalendarDays, MapPin, Search } from 'lucide-react'
+import { Star, Heart, Flower2, Theater, CalendarDays, MapPin, Search } from '@/components/XPIcon'
 import ImageLightbox from '@/components/ImageLightbox'
 import CuteImage from '@/components/CuteImage'
 

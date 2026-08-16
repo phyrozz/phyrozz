@@ -1,4 +1,4 @@
-import { Heart } from 'lucide-react'
+import { Heart } from '@/components/XPIcon'
 import { PawDeco } from '@/components/Decos'
 
 export default function Footer() {

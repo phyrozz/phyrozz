@@ -1,4 +1,4 @@
-import { Lightbulb, Quote } from 'lucide-react'
+import { Lightbulb, Quote } from '@/components/XPIcon'
 import { StarDeco, HeartDeco } from '@/components/Decos'
 
 interface TipMantra {

@@ -1,8 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Home, Briefcase, Monitor, Palette, Sparkles, Music2 } from 'lucide-react'
-import type { LucideIcon } from 'lucide-react'
+import { Home, Briefcase, Monitor, Palette, Flower2, Music2 } from '@/components/XPIcon'
+import type { LucideIcon } from '@/components/XPIcon'
 
 interface Section {
   id: string
@@ -15,8 +15,8 @@ const SECTIONS: Section[] = [
   { id: 'work',     label: 'Experience', Icon: Briefcase },
   { id: 'projects', label: 'Projects',   Icon: Monitor },
   { id: 'music',    label: 'Music',      Icon: Music2 },
-  { id: 'cosplays', label: 'Cosplays',   Icon: Sparkles },
-  { id: 'hobbies',  label: 'Hobbies',    Icon: Palette },
+  { id: 'cosplays', label: 'Cosplays',   Icon: Flower2 },
+  // { id: 'hobbies',  label: 'Hobbies',    Icon: Palette },
 ]
 
 export default function TableOfContents() {

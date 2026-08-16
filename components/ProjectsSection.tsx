@@ -1,5 +1,5 @@
-import { Star, GitBranch, Globe, Monitor } from 'lucide-react'
-import { FlowerDeco } from '@/components/Decos'
+import { Star, GitBranch, Globe, Monitor, FolderOpen } from '@/components/XPIcon'
+
 import CuteImage from '@/components/CuteImage'
 
 interface Project {
@@ -31,9 +31,9 @@ export default function ProjectsSection({ projects }: Props) {
     >
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-10">
-          <FlowerDeco className="inline-block w-8 h-8 mr-3 pastel-float align-middle" />
+          <FolderOpen size={32} className="inline-block w-8 h-8 mr-3 pastel-float align-middle" />
           <h2 className="pastel-heading text-3xl md:text-4xl inline-block">Projects</h2>
-          <FlowerDeco className="inline-block w-8 h-8 ml-3 pastel-float align-middle" style={{ animationDelay: '0.7s' }} />
+          <FolderOpen size={32} className="inline-block w-8 h-8 ml-3 pastel-float align-middle" style={{ animationDelay: '0.7s' }} />
         </div>
 
         {featured.length > 0 && (

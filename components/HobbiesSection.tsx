@@ -1,5 +1,5 @@
-import { Smile } from 'lucide-react'
-import { MushroomDeco, PawDeco } from '@/components/Decos'
+import { Smile, Palette, Heart } from '@/components/XPIcon'
+
 import CuteImage from '@/components/CuteImage'
 
 interface Hobby {
@@ -24,9 +24,9 @@ export default function HobbiesSection({ hobbies }: Props) {
     >
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-10">
-          <MushroomDeco className="inline-block w-8 h-8 mr-3 pastel-float align-middle" />
+          <Palette size={32} className="inline-block w-8 h-8 mr-3 pastel-float align-middle" />
           <h2 className="pastel-heading text-3xl md:text-4xl inline-block">Hobbies</h2>
-          <MushroomDeco className="inline-block w-8 h-8 ml-3 pastel-float align-middle" style={{ animationDelay: '1s' }} />
+          <Palette size={32} className="inline-block w-8 h-8 ml-3 pastel-float align-middle" style={{ animationDelay: '1s' }} />
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5">
@@ -58,7 +58,7 @@ export default function HobbiesSection({ hobbies }: Props) {
 
         <div className="flex justify-center mt-8 gap-3" aria-hidden="true">
           {[0, 1, 2].map((i) => (
-            <PawDeco key={i} className="w-6 h-6 opacity-40" />
+            <Heart key={i} size={24} className="w-6 h-6 opacity-40" aria-hidden="true" />
           ))}
         </div>
       </div>

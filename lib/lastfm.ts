@@ -58,6 +58,8 @@ export type LastFmTag = {
   url: string
 }
 
+export type LastFmPeriod = '7day' | '1month' | 'overall'
+
 export type LastFmTaste = {
   username: string
   profile: LastFmProfile | null
@@ -211,7 +213,7 @@ function normalizeTrackInfo(track: { image?: LastFmImage[]; album?: LastFmNamedI
   }
 }
 
-export async function loadLastFmTaste(): Promise<LastFmTaste> {
+export async function loadLastFmTaste(period: LastFmPeriod = 'overall', page = 1, limit = 20): Promise<LastFmTaste> {
   const username = getUsername()
 
   const [profileRes, recentRes, artistsRes, tracksRes, albumsRes, tagsRes] = await Promise.allSettled([
@@ -229,22 +231,22 @@ export async function loadLastFmTaste(): Promise<LastFmTaste> {
       recenttracks?: {
         track?: LastFmTrackItem[] | LastFmTrackItem
       }
-    }>('user.getRecentTracks', { user: username, limit: 8, extended: 1 }, { userParam: 'user' }),
+    }>('user.getRecentTracks', { user: username, limit, page, extended: 1, ...(period === 'overall' ? {} : { from: Math.floor(Date.now() / 1000) - (period === '7day' ? 7 : 30) * 86400 }) }, { userParam: 'user' }),
     lastFmRequest<{
       topartists?: {
         artist?: LastFmNamedItem[] | LastFmNamedItem
       }
-    }>('user.getTopArtists', { user: username, limit: 4, period: '12month' }, { userParam: 'user' }),
+    }>('user.getTopArtists', { user: username, limit, page, period }, { userParam: 'user' }),
     lastFmRequest<{
       toptracks?: {
         track?: Array<LastFmTrackItem & { playcount?: string }> | (LastFmTrackItem & { playcount?: string })
       }
-    }>('user.getTopTracks', { user: username, limit: 4, period: '12month' }, { userParam: 'user' }),
+    }>('user.getTopTracks', { user: username, limit, page, period }, { userParam: 'user' }),
     lastFmRequest<{
       topalbums?: {
         album?: Array<LastFmNamedItem & { artist?: LastFmNamedItem | string; playcount?: string }> | (LastFmNamedItem & { artist?: LastFmNamedItem | string; playcount?: string })
       }
-    }>('user.getTopAlbums', { user: username, limit: 4, period: '12month' }, { userParam: 'user' }),
+    }>('user.getTopAlbums', { user: username, limit, page, period }, { userParam: 'user' }),
     lastFmRequest<{
       toptags?: {
         tag?: Array<{ name?: string; count?: string; url?: string }> | { name?: string; count?: string; url?: string }
@@ -338,15 +340,15 @@ export async function loadLastFmTaste(): Promise<LastFmTaste> {
           url: profileJson.user.url ?? null,
         }
       : null,
-    recentTracks: recentTracksRaw.slice(0, 8).map(normalizeTrack),
-    topArtists: topArtistsRaw.slice(0, 4).map((artist, index) => {
+    recentTracks: recentTracksRaw.slice(0, limit).map(normalizeTrack),
+    topArtists: topArtistsRaw.slice(0, limit).map((artist, index) => {
       const normalized = normalizeArtist(artist)
       return {
         ...normalized,
         imageUrl: artistImageOverrides[index] ?? normalized.imageUrl,
       }
     }),
-    topTracks: topTracksRaw.slice(0, 4).map((track, index) => {
+    topTracks: topTracksRaw.slice(0, limit).map((track, index) => {
       const normalized = normalizeTrack(track)
       const override = trackImageOverrides[index]
       return {
@@ -355,7 +357,7 @@ export async function loadLastFmTaste(): Promise<LastFmTaste> {
         playcount: toNumber((track as Record<string, unknown>).playcount),
       }
     }),
-    topAlbums: topAlbumsRaw.slice(0, 4).map((album) =>
+    topAlbums: topAlbumsRaw.slice(0, limit).map((album) =>
       normalizeAlbum(album as LastFmNamedItem & { artist?: LastFmNamedItem | string; playcount?: string }),
     ),
     topTags: topTagsRaw.slice(0, 8).map((tag) => ({

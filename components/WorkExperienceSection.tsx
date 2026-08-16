@@ -1,4 +1,4 @@
-import { Briefcase, Building2 } from 'lucide-react'
+import { Briefcase, Building2 } from '@/components/XPIcon'
 import CuteImage from '@/components/CuteImage'
 
 interface WorkExp {

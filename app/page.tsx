@@ -83,12 +83,12 @@ export default async function HomePage() {
           <CosplaysLoader />
         </Suspense>
 
-        <hr className="pastel-divider" />
+        {/* <hr className="pastel-divider" /> */}
 
         {/* -- Hobbies --------------------------------------------------- */}
-        <Suspense fallback={<HobbiesSkeleton />}>
+        {/* <Suspense fallback={<HobbiesSkeleton />}>
           <HobbiesLoader />
-        </Suspense>
+        </Suspense> */}
 
         {/* -- Tips & Mantras ------------------------------------------- */}
         {/* <Suspense fallback={<TipsSkeleton />}>

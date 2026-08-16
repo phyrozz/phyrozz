@@ -1,12 +1,24 @@
-import type { ReactNode } from 'react'
-import { Disc3, Flame, Headphones, Music2, Play, Radio, Sparkles } from 'lucide-react'
+'use client'
+
+import { useEffect, useState, type ReactNode } from 'react'
+import { Disc3, Flame, Headphones, Music2, Play, Radio, Important, Refresh } from '@/components/XPIcon'
 import CuteImage from '@/components/CuteImage'
-import type { LastFmAlbum, LastFmArtist, LastFmTag, LastFmTaste, LastFmTrack } from '@/lib/lastfm'
+import type { LastFmAlbum, LastFmArtist, LastFmTag, LastFmTaste, LastFmTrack, LastFmPeriod } from '@/lib/lastfm'
+import DropdownMenu from '@/components/DropdownMenu'
+import InfiniteList from '@/components/InfiniteList'
 
 interface Props {
   music: LastFmTaste | null
 }
 
+const PERIOD_OPTIONS = [
+  { value: '7day', label: '1 week' },
+  { value: '1month', label: '1 month' },
+  { value: 'overall', label: 'All time' },
+] as const
+
+type PanelKey = 'artists' | 'recent' | 'albums' | 'tracks'
+type PanelPeriods = Record<PanelKey, LastFmPeriod>
 const numberFormat = new Intl.NumberFormat('en-US')
 
 function formatCount(count: number) {
@@ -40,17 +52,26 @@ function MusicEmptyState() {
 function PanelShell({
   title,
   icon: Icon,
+  period,
+  onPeriodChange,
   children,
 }: {
   title: string
   icon: typeof Disc3
+  period?: LastFmPeriod
+  onPeriodChange?: (period: string) => void
   children: ReactNode
 }) {
   return (
-    <section className="pastel-card flex h-full min-h-[16rem] flex-col bg-white/85 p-4 shadow-sm sm:min-h-[18rem]">
-      <div className="mb-3 flex items-center gap-2">
-        <Icon size={16} className="text-honey-dark" aria-hidden="true" />
-        <h3 className="text-sm font-extrabold uppercase tracking-[0.2em] text-brown">{title}</h3>
+    <section className="pastel-card flex h-[28rem] min-h-[28rem] max-h-[28rem] flex-col bg-white/85 p-4 shadow-sm sm:min-h-[18rem]">
+      <div className="mb-3 flex items-center justify-between gap-2">
+        <div className="flex min-w-0 items-center gap-2">
+          <Icon size={16} className="text-honey-dark" aria-hidden="true" />
+          <h3 className="truncate text-sm font-extrabold uppercase tracking-[0.2em] text-brown">{title}</h3>
+        </div>
+        {period && onPeriodChange && (
+          <DropdownMenu value={period} options={[...PERIOD_OPTIONS]} onChange={onPeriodChange} className="music-period-menu" menuLabel={title + ' period'} />
+        )}
       </div>
       <div className="flex-1 overflow-y-auto pr-1">
         {children}
@@ -130,7 +151,7 @@ function TrackRow({ track, compact = false }: { track: LastFmTrack; compact?: bo
             </>
           ) : (
             <>
-              <Sparkles size={10} aria-hidden="true" />
+              <Important size={10} aria-hidden="true" />
               {formatDate(track.playedAt)}
             </>
           )}
@@ -194,7 +215,81 @@ function TagChip({ tag }: { tag: LastFmTag }) {
 }
 
 export default function MusicTasteSection({ music }: Props) {
-  if (!music) {
+  const [periods, setPeriods] = useState<PanelPeriods>({
+    artists: 'overall',
+    recent: 'overall',
+    albums: 'overall',
+    tracks: 'overall',
+  })
+  const [datasets, setDatasets] = useState<Partial<Record<LastFmPeriod, LastFmTaste>>>(
+    music ? { overall: music } : {},
+  )
+  const [pages, setPages] = useState<Record<PanelKey, number>>({ artists: 1, recent: 1, albums: 1, tracks: 1 })
+  const [loadingPanels, setLoadingPanels] = useState<Record<PanelKey, boolean>>({ artists: false, recent: false, albums: false, tracks: false })
+  const [hasMore, setHasMore] = useState<Record<PanelKey, boolean>>({ artists: true, recent: true, albums: true, tracks: true })
+  const [refreshedMusic, setRefreshedMusic] = useState<LastFmTaste | null>(null)
+  const [refreshing, setRefreshing] = useState(false)
+  const currentMusic = refreshedMusic ?? music
+
+  useEffect(() => {
+    const next = { ...periods }
+    for (const key of Object.keys(next) as PanelKey[]) {
+      const saved = window.localStorage.getItem('music-period-' + key)
+      if (saved === '7day' || saved === '1month' || saved === 'overall') next[key] = saved
+    }
+    setPeriods(next)
+  }, [])
+
+  async function changePeriod(key: PanelKey, value: string) {
+    const period = value as LastFmPeriod
+    setPeriods((current) => ({ ...current, [key]: period }))
+    window.localStorage.setItem('music-period-' + key, period)
+    if (datasets[period]) return
+
+    const response = await fetch('/api/music?period=' + period)
+    if (!response.ok) return
+    const next = await response.json() as LastFmTaste
+    setDatasets((current) => ({ ...current, [period]: next }))
+  }
+  async function refreshMusic() {
+    setRefreshing(true)
+    try {
+      const response = await fetch('/api/music?period=overall&page=1&limit=20')
+      if (!response.ok) return
+      const next = await response.json() as LastFmTaste
+      setRefreshedMusic(next)
+      setDatasets((current) => ({ ...current, overall: next }))
+      setPages({ artists: 1, recent: 1, albums: 1, tracks: 1 })
+      setHasMore({ artists: true, recent: true, albums: true, tracks: true })
+    } finally {
+      setRefreshing(false)
+    }
+  }
+  async function loadMore(key: PanelKey) {
+    if (loadingPanels[key]) return
+    const period = key === 'recent' ? 'overall' : periods[key]
+    const nextPage = pages[key] + 1
+    setLoadingPanels((current) => ({ ...current, [key]: true }))
+    try {
+      const response = await fetch('/api/music?period=' + period + '&page=' + nextPage + '&limit=20')
+      if (!response.ok) return
+      const incoming = await response.json() as LastFmTaste
+      setDatasets((current) => {
+        const existing = current[period] ?? music
+        if (!existing) return current
+        if (key === 'artists') return { ...current, [period]: { ...existing, topArtists: [...existing.topArtists, ...incoming.topArtists] } }
+        if (key === 'recent') return { ...current, [period]: { ...existing, recentTracks: [...existing.recentTracks, ...incoming.recentTracks] } }
+        if (key === 'albums') return { ...current, [period]: { ...existing, topAlbums: [...existing.topAlbums, ...incoming.topAlbums] } }
+        return { ...current, [period]: { ...existing, topTracks: [...existing.topTracks, ...incoming.topTracks] } }
+      })
+      setPages((current) => ({ ...current, [key]: nextPage }))
+      const count = key === 'artists' ? incoming.topArtists.length : key === 'recent' ? incoming.recentTracks.length : key === 'albums' ? incoming.topAlbums.length : incoming.topTracks.length
+      if (count < 20) setHasMore((current) => ({ ...current, [key]: false }))
+    } finally {
+      setLoadingPanels((current) => ({ ...current, [key]: false }))
+    }
+  }
+  if (!currentMusic) {
     return (
       <section
         id="music"
@@ -212,8 +307,13 @@ export default function MusicTasteSection({ music }: Props) {
     )
   }
 
-  const nowPlaying = music.recentTracks.find((track) => track.nowPlaying) ?? music.recentTracks[0] ?? null
-  const profileSince = music.profile?.registered ? new Date(music.profile.registered).getFullYear() : null
+  const artists = datasets[periods.artists]?.topArtists ?? currentMusic.topArtists
+  const recent = datasets[periods.recent]?.recentTracks ?? currentMusic.recentTracks
+  const albums = datasets[periods.albums]?.topAlbums ?? currentMusic.topAlbums
+  const tracks = datasets[periods.tracks]?.topTracks ?? currentMusic.topTracks
+
+  const nowPlaying = currentMusic.recentTracks.find((track) => track.nowPlaying) ?? currentMusic.recentTracks[0] ?? null
+  const profileSince = currentMusic.profile?.registered ? new Date(currentMusic.profile.registered).getFullYear() : null
 
   return (
     <section
@@ -226,9 +326,9 @@ export default function MusicTasteSection({ music }: Props) {
           <h2 className="pastel-heading inline-block text-2xl sm:text-3xl md:text-4xl">Music Taste</h2>
           <Music2 size={22} className="inline-block align-middle ml-2 text-sky-dark pastel-float sm:ml-3 sm:size-7" style={{ animationDelay: '0.8s' }} aria-hidden="true" />
           <p className="mt-3 flex items-center justify-center gap-1.5 text-xs font-semibold text-brown-light sm:mt-4 sm:text-sm">
-            <Sparkles size={13} className="fill-honey text-honey" aria-hidden="true" />
+            <Important size={13} className="fill-honey text-honey" aria-hidden="true" />
             Curated from my account on Last.fm
-            <Sparkles size={13} className="fill-honey text-honey" aria-hidden="true" />
+            <Important size={13} className="fill-honey text-honey" aria-hidden="true" />
           </p>
         </div>
 
@@ -236,10 +336,10 @@ export default function MusicTasteSection({ music }: Props) {
           <article className="pastel-card bg-white/85 p-3 shadow-sm sm:p-6">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-5">
               <div className="relative h-18 w-18 shrink-0 overflow-hidden rounded-3xl border-2 border-sky-dark bg-cream shadow-sm sm:h-24 sm:w-24">
-                {music.profile?.imageUrl ? (
+                {currentMusic.profile?.imageUrl ? (
                   <CuteImage
-                    src={music.profile.imageUrl}
-                    alt={music.profile.name}
+                    src={currentMusic.profile.imageUrl}
+                    alt={currentMusic.profile.name}
                     fill
                     wrapperClassName="h-full w-full"
                     className="object-cover"
@@ -253,24 +353,36 @@ export default function MusicTasteSection({ music }: Props) {
               </div>
 
               <div className="min-w-0 flex-1">
-                <p className="text-[0.6rem] font-extrabold uppercase tracking-[0.22em] text-brown-light sm:text-xs sm:tracking-[0.28em]">Listening Profile</p>
-                <h3 className="mt-1 text-lg font-extrabold text-ink sm:text-2xl">{music.profile?.name ?? music.username}</h3>
+                <div className="flex items-center justify-between gap-2">
+                  <p className="text-[0.6rem] font-extrabold uppercase tracking-[0.22em] text-brown-light sm:text-xs sm:tracking-[0.28em]">Listening Profile</p>
+                  <button
+                    type="button"
+                    className="music-refresh-button flex items-center gap-1 rounded-full px-2 py-1 text-[0.65rem] font-bold text-brown"
+                    onClick={refreshMusic}
+                    disabled={refreshing}
+                    aria-label="Refresh listening profile"
+                  >
+                    <Refresh size={13} className={refreshing ? 'animate-spin' : ''} />
+                    <span className="hidden sm:inline">{refreshing ? 'Refreshing…' : 'Refresh'}</span>
+                  </button>
+                </div>
+                <h3 className="mt-1 text-lg font-extrabold text-ink sm:text-2xl">{currentMusic.profile?.name ?? currentMusic.username}</h3>
                 {/* <p className="mt-2 max-w-prose text-sm leading-relaxed text-ink/70">
                   I use Last.fm to keep track of the artists, albums, and songs that are living on repeat.
                 </p> */}
 
                 <div className="mt-3 flex flex-wrap gap-2 sm:mt-4">
                   <span className="pastel-badge bg-white">
-                    <Flame size={11} aria-hidden="true" /> {formatCount(music.profile?.playcount ?? 0)} scrobbles
+                    <Flame size={11} aria-hidden="true" /> {formatCount(currentMusic.profile?.playcount ?? 0)} scrobbles
                   </span>
-                  {music.profile?.country && (
+                  {currentMusic.profile?.country && (
                     <span className="pastel-badge bg-white">
-                      <Radio size={11} aria-hidden="true" /> {music.profile.country}
+                      <Radio size={11} aria-hidden="true" /> {currentMusic.profile.country}
                     </span>
                   )}
                   {profileSince && (
                     <span className="pastel-badge bg-white">
-                      <Sparkles size={11} aria-hidden="true" /> Since {profileSince}
+                      <Important size={11} aria-hidden="true" /> Since {profileSince}
                     </span>
                   )}
                 </div>
@@ -314,14 +426,14 @@ export default function MusicTasteSection({ music }: Props) {
               )}
             </div>
 
-            {music.topTags.length > 0 && (
+            {currentMusic.topTags.length > 0 && (
               <div className="mt-3 sm:mt-5">
                 <div className="mb-3 flex items-center gap-2 text-[0.65rem] font-extrabold uppercase tracking-[0.22em] text-brown-light sm:text-xs sm:tracking-[0.24em]">
-                  <Sparkles size={12} aria-hidden="true" />
+                  <Important size={12} aria-hidden="true" />
                   Favorite Tags
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  {music.topTags.map((tag) => (
+                  {currentMusic.topTags.map((tag) => (
                     <TagChip key={tag.name} tag={tag} />
                   ))}
                 </div>
@@ -331,42 +443,50 @@ export default function MusicTasteSection({ music }: Props) {
 
           <div className="flex gap-2 overflow-x-auto pb-2 pr-1 sm:grid sm:grid-cols-2 sm:gap-5 sm:overflow-visible sm:pb-0 sm:pr-0">
             <div className="w-[88vw] max-w-[22rem] shrink-0 sm:w-auto sm:max-w-none sm:min-w-0">
-              <PanelShell title="Top Artists" icon={Disc3}>
+              <PanelShell title="Top Artists" icon={Disc3} period={periods.artists} onPeriodChange={(value) => changePeriod('artists', value)}>
+                <InfiniteList onLoadMore={() => loadMore('artists')} hasMore={hasMore.artists} loading={loadingPanels.artists}>
                 <div className="space-y-2">
-                  {music.topArtists.map((artist) => (
-                    <ArtistRow key={artist.name} artist={artist} />
+                  {artists.map((artist, index) => (
+                    <ArtistRow key={artist.name + '-' + index} artist={artist} />
                   ))}
                 </div>
+                </InfiniteList>
               </PanelShell>
             </div>
 
             <div className="w-[88vw] max-w-[22rem] shrink-0 sm:w-auto sm:max-w-none sm:min-w-0">
               <PanelShell title="Recent Tracks" icon={Radio}>
+                <InfiniteList onLoadMore={() => loadMore('recent')} hasMore={hasMore.recent} loading={loadingPanels.recent}>
                 <div className="space-y-2">
-                  {music.recentTracks.slice(0, 4).map((track) => (
-                    <TrackRow key={`${track.name}-${track.playedAt ?? track.artist}`} track={track} compact />
+                  {recent.map((track, index) => (
+                      <TrackRow key={track.name + '-' + (track.playedAt ?? track.artist) + '-' + index} track={track} compact />
                   ))}
                 </div>
+                </InfiniteList>
               </PanelShell>
             </div>
 
             <div className="w-[88vw] max-w-[22rem] shrink-0 sm:w-auto sm:max-w-none sm:min-w-0">
-              <PanelShell title="Top Albums" icon={Headphones}>
+              <PanelShell title="Top Albums" icon={Headphones} period={periods.albums} onPeriodChange={(value) => changePeriod('albums', value)}>
+                <InfiniteList onLoadMore={() => loadMore('albums')} hasMore={hasMore.albums} loading={loadingPanels.albums}>
                 <div className="space-y-2">
-                  {music.topAlbums.map((album) => (
-                    <AlbumRow key={album.name} album={album} />
+                  {albums.map((album, index) => (
+                    <AlbumRow key={album.name + '-' + album.artist + '-' + index} album={album} />
                   ))}
                 </div>
+                </InfiniteList>
               </PanelShell>
             </div>
 
             <div className="w-[88vw] max-w-[22rem] shrink-0 sm:w-auto sm:max-w-none sm:min-w-0">
-              <PanelShell title="Top Tracks" icon={Flame}>
+              <PanelShell title="Top Tracks" icon={Flame} period={periods.tracks} onPeriodChange={(value) => changePeriod('tracks', value)}>
+                <InfiniteList onLoadMore={() => loadMore('tracks')} hasMore={hasMore.tracks} loading={loadingPanels.tracks}>
                 <div className="space-y-2">
-                  {music.topTracks.map((track) => (
-                    <TrackRow key={track.name} track={track} />
+                  {tracks.map((track, index) => (
+                    <TrackRow key={track.name + '-' + track.artist + '-' + index} track={track} />
                   ))}
                 </div>
+                </InfiniteList>
               </PanelShell>
             </div>
           </div>
