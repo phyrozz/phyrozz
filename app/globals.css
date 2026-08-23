@@ -768,3 +768,235 @@ body {
 .theme-xp .xp-start-avatar-wrap .pastel-wiggle {
   display: none;
 }
+/* Windows 7 Aero theme */
+.aero-only-icon { display: none; }
+.theme-aero .pastel-only-icon, .theme-aero .xp-only-icon { display: none; }
+.theme-aero .aero-only-icon { display: inline-block; }
+.theme-aero body { background: radial-gradient(circle at 50% -20%, rgba(255,255,255,.9), transparent 42%), linear-gradient(180deg, #b9e5ff 0%, #eaf7ff 42%, #d7ecf8 100%); color: #17354d; font-family: 'Segoe UI', Tahoma, sans-serif; }
+.theme-aero nav { background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(197,226,242,.88) 48%, rgba(108,169,204,.92)) !important; border-bottom: 1px solid #4a86aa !important; box-shadow: 0 1px 5px rgba(27,73,105,.45), inset 0 1px rgba(255,255,255,.95); backdrop-filter: blur(12px); }
+.theme-aero nav a, .theme-aero nav button { color: #16466a; text-shadow: 0 1px #fff; }
+.theme-aero nav a:hover, .theme-aero nav button:hover { background: rgba(255,255,255,.55) !important; }
+.theme-aero .pastel-card, .theme-aero section[id] { border: 1px solid #83adca !important; border-radius: 8px; background: linear-gradient(135deg, rgba(255,255,255,.88), rgba(226,243,252,.82)) !important; box-shadow: 0 2px 8px rgba(44,91,120,.22), inset 0 1px rgba(255,255,255,.95); }
+.theme-aero .pastel-card:hover { transform: translateY(-2px); box-shadow: 0 5px 12px rgba(44,91,120,.3), inset 0 1px #fff; }
+.theme-aero .pastel-heading { font-family: 'Segoe UI', Tahoma, sans-serif; color: #1b5982; text-shadow: 0 1px #fff; }
+.theme-aero .pastel-heading::after { height: 2px; bottom: -4px; background: #4da5d7; border-radius: 2px; }
+.theme-aero .pastel-divider { height: 1px; max-width: 100%; margin: 1.5rem auto; background: #82b3d1; }
+.theme-aero .pastel-badge { border: 1px solid #75a6c3; border-radius: 3px; background: linear-gradient(#fff, #d9edf8); color: #245a7d; box-shadow: inset 0 1px #fff; }
+.theme-aero button.rounded-full, .theme-aero a.rounded-full, .theme-aero .xp-theme-trigger { border: 1px solid #5b92b4; border-radius: 4px; background: linear-gradient(#fff 0%, #e8f6ff 48%, #b9def2 52%, #e5f4fc 100%); color: #16466a; box-shadow: inset 0 1px #fff, 0 1px 2px rgba(0,0,0,.15); text-shadow: 0 1px #fff; }
+.theme-aero button.rounded-full:hover, .theme-aero a.rounded-full:hover, .theme-aero .xp-theme-trigger:hover { background: linear-gradient(#fff, #c9edff 48%, #8bd0ef 52%, #def6ff) !important; color: #073c60; transform: none; }
+.theme-aero footer { background: rgba(181,218,237,.82) !important; border-top: 1px solid #6e9fbd !important; box-shadow: inset 0 1px #fff; }
+.theme-aero .xp-theme-menu { border: 1px solid #6197b7; border-radius: 4px; background: rgba(240,250,255,.96); box-shadow: 0 4px 12px rgba(27,73,105,.3); }
+.theme-aero .xp-theme-option { color: #16466a; font-family: 'Segoe UI', Tahoma, sans-serif; }
+.theme-aero .xp-theme-option:hover, .theme-aero .xp-theme-option:focus-visible, .theme-aero .xp-theme-option.is-selected { background: #c5e9fb; color: #073c60; }
+.theme-aero .xp-theme-option-mark { color: #0876ad; }
+.theme-aero input, .theme-aero textarea, .theme-aero select { border: 1px solid #79a7c1; border-radius: 3px; box-shadow: inset 0 1px 3px rgba(0,0,0,.12); }
+.theme-aero ::-webkit-scrollbar-track { background: #c8e5f3; }
+.theme-aero ::-webkit-scrollbar-thumb { background: #6fa9c8; border: 1px solid #4b85a7; border-radius: 4px; }
+/* Aero detail fixes for remaining pastel surfaces */
+.theme-aero nav {
+  background: linear-gradient(180deg, rgba(255,255,255,.72) 0%, rgba(224,245,255,.42) 22%, rgba(113,184,222,.34) 58%, rgba(36,104,153,.5) 100%) !important;
+  border-top: 1px solid rgba(255,255,255,.95) !important;
+  border-bottom: 1px solid rgba(27,83,120,.72) !important;
+  box-shadow: inset 0 1px rgba(255,255,255,.95), inset 0 -1px rgba(255,255,255,.24), 0 2px 9px rgba(24,77,111,.42);
+  backdrop-filter: blur(18px) saturate(145%);
+  -webkit-backdrop-filter: blur(18px) saturate(145%);
+}
+.theme-aero nav::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(105deg, rgba(255,255,255,.4), transparent 28%, transparent 70%, rgba(255,255,255,.2));
+}
+.theme-aero #hero > div:nth-child(2) {
+  background: linear-gradient(180deg, rgba(238,250,255,.94), rgba(201,230,244,.92)) !important;
+}
+.theme-aero #hero > div:first-child > div:last-child {
+  background: linear-gradient(to top, rgba(201,230,244,.98), transparent) !important;
+}
+.theme-aero .xp-start-avatar-wrap { margin-top: -4.5rem; }
+.theme-aero .xp-start-avatar {
+  width: 8.1rem;
+  padding: .35rem;
+  border: 1px solid #2c6d98;
+  border-radius: .45rem;
+  background: linear-gradient(145deg, #effaff 0%, #78b9dc 46%, #24628e 100%);
+  box-shadow: 2px 3px 0 rgba(22,70,102,.35), inset 0 1px rgba(255,255,255,.95);
+}
+.theme-aero .xp-start-avatar-frame {
+  width: 7.35rem;
+  height: 7.35rem;
+  border: 3px solid #fff;
+  border-radius: .2rem !important;
+  background: #d9edf8;
+  box-shadow: inset 0 0 0 1px #4c86aa;
+}
+.theme-aero .xp-start-avatar-frame img { border-radius: .05rem !important; }
+.theme-aero .xp-start-avatar-wrap .pastel-wiggle { display: none; }
+
+.theme-aero #music {
+  border-color: #70a7c4 !important;
+  background: linear-gradient(135deg, rgba(180,220,241,.7), rgba(239,249,255,.9) 52%, rgba(185,222,239,.72)) !important;
+}
+.theme-aero #music [class*="bg-cream"],
+.theme-aero #music [class*="bg-white"],
+.theme-aero #music [class*="from-cream"],
+.theme-aero #music [class*="from-blush"] {
+  background-color: rgba(239,249,255,.72) !important;
+  background-image: linear-gradient(135deg, rgba(255,255,255,.82), rgba(207,235,248,.72)) !important;
+}
+.theme-aero #music [class*="border-cream"],
+.theme-aero #music [class*="border-blush"],
+.theme-aero #music [class*="border-sky"] {
+  border-color: #83b1ca !important;
+}
+.theme-aero #music [class*="text-brown"],
+.theme-aero #music [class*="text-ink"] { color: #235878 !important; }
+.theme-aero #music [class*="hover:bg-white"]:hover { background: #d8f1fc !important; }
+
+.theme-aero [aria-label^="Loading"] {
+  position: relative;
+  color: #285c79;
+}
+.theme-aero [aria-label^="Loading"]::before {
+  content: '';
+  position: absolute;
+  z-index: 3;
+  top: 1rem;
+  right: 1rem;
+  width: 1.2rem;
+  height: 1.2rem;
+  border: 3px dotted #55b7e5;
+  border-top-color: #087fbd;
+  border-right-color: #2ea4d8;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: drop-shadow(0 0 2px rgba(74, 181, 229, .85));
+  animation: aero-busy-cursor .8s linear infinite;
+}
+.theme-aero [aria-label^="Loading"] .animate-pulse {
+  animation: aero-loading-pulse 1.8s ease-in-out infinite;
+  border-color: #80abc3 !important;
+  background-color: #c3e1f0 !important;
+  background-image: linear-gradient(105deg, #c3e1f0, #eaf8ff, #c3e1f0) !important;
+  background-size: 220% 100%;
+  border-radius: 4px !important;
+  box-shadow: inset 0 1px rgba(255,255,255,.9);
+}
+.theme-aero [aria-label^="Loading"] .bg-blush-dark,
+.theme-aero [aria-label^="Loading"] .bg-honey { background-color: #76afd0 !important; }
+.theme-aero .xp-image-loading-overlay {
+  background: rgba(190,224,240,.78) !important;
+  backdrop-filter: blur(5px);
+}
+.theme-aero .xp-image-loading-box {
+  border: 1px solid #5f96b5;
+  border-radius: 4px;
+  background: rgba(235,249,255,.9);
+  color: #245a78;
+  box-shadow: inset 0 1px #fff, 0 2px 8px rgba(37,91,122,.25);
+}
+.theme-aero .xp-image-loading-box .cute-loader-dot { background: #4d9ac1 !important; }
+.theme-aero .xp-image-loading-box {
+  position: relative;
+  min-width: 4rem;
+  min-height: 3.25rem;
+  justify-content: center;
+}
+.theme-aero .xp-image-loading-box::before {
+  content: '';
+  width: 1.35rem;
+  height: 1.35rem;
+  border: 3px dotted #55b7e5;
+  border-top-color: #087fbd;
+  border-right-color: #2ea4d8;
+  border-radius: 50%;
+  filter: drop-shadow(0 0 2px rgba(74, 181, 229, .85));
+  animation: aero-busy-cursor .8s linear infinite;
+}
+.theme-aero .xp-image-loading-box .cute-loader-paws { display: none; }
+.theme-aero .xp-image-loading-box {
+  position: relative;
+  min-width: 4rem;
+  min-height: 3.25rem;
+  justify-content: center;
+}
+.theme-aero .xp-image-loading-box::before {
+  content: "";
+  width: 1.35rem;
+  height: 1.35rem;
+  border: 3px dotted #55b7e5;
+  border-top-color: #087fbd;
+  border-right-color: #2ea4d8;
+  border-radius: 50%;
+  filter: drop-shadow(0 0 2px rgba(74, 181, 229, .85));
+  animation: aero-busy-cursor .8s linear infinite;
+}
+.theme-aero .xp-image-loading-box .cute-loader-paws { display: none; }
+@keyframes aero-busy-cursor {
+  to { transform: rotate(360deg); }
+}
+@keyframes aero-busy-cursor {
+  to { transform: rotate(360deg); }
+}
+@keyframes aero-loading-pulse {
+  0%, 100% { opacity: .72; background-position: 100% 0; }
+  50% { opacity: 1; background-position: 0 0; }
+}
+.theme-aero nav > div > a > span {
+  font-family: 'Segoe UI', Tahoma, sans-serif !important;
+  font-size: 1rem !important;
+  font-weight: 600;
+  letter-spacing: .01em;
+  text-shadow: 0 1px rgba(255,255,255,.95);
+}
+/* Keep theme-picker option hover states above the navbar button hover rule. */
+.theme-xp .xp-theme-menu .xp-theme-option:hover,
+.theme-xp .xp-theme-menu .xp-theme-option:focus-visible,
+.theme-xp .xp-theme-menu .xp-theme-option.is-selected {
+  background: #316ac5 !important;
+  color: #ffffff !important;
+}
+.theme-aero .xp-theme-menu .xp-theme-option:hover,
+.theme-aero .xp-theme-menu .xp-theme-option:focus-visible,
+.theme-aero .xp-theme-menu .xp-theme-option.is-selected {
+  background: #c5e9fb !important;
+  color: #073c60 !important;
+}
+
+/* Aero text colors for content that uses the pastel utility palette. */
+.theme-aero [class~="text-ink"] {
+  color: #17354d !important;
+}
+
+.theme-aero [class~="text-ink/80"] {
+  color: #28536d !important;
+}
+
+.theme-aero [class~="text-ink/70"] {
+  color: #35647d !important;
+}
+
+.theme-aero [class~="text-ink/60"] {
+  color: #416f87 !important;
+}
+
+.theme-aero [class~="text-ink/55"] {
+  color: #4b7890 !important;
+}
+
+.theme-aero [class~="text-brown"] {
+  color: #16466a !important;
+}
+
+.theme-aero [class~="text-brown-light"] {
+  color: #35657f !important;
+}
+
+.theme-aero [class~="text-brown-light/60"] {
+  color: #4f7890 !important;
+}
+
+.theme-aero [class~="group-hover:text-brown"]:hover {
+  color: #073c60 !important;
+}

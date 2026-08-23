@@ -20,6 +20,12 @@ const PERIOD_OPTIONS = [
 
 type PanelKey = 'artists' | 'recent' | 'albums' | 'tracks'
 type PanelPeriods = Record<PanelKey, LastFmPeriod>
+const DEFAULT_PERIODS: PanelPeriods = {
+  artists: 'overall',
+  recent: 'overall',
+  albums: 'overall',
+  tracks: 'overall',
+}
 const numberFormat = new Intl.NumberFormat('en-US')
 
 function formatCount(count: number) {
@@ -216,12 +222,7 @@ function TagChip({ tag }: { tag: LastFmTag }) {
 }
 
 export default function MusicTasteSection({ music }: Props) {
-  const [periods, setPeriods] = useState<PanelPeriods>({
-    artists: 'overall',
-    recent: 'overall',
-    albums: 'overall',
-    tracks: 'overall',
-  })
+  const [periods, setPeriods] = useState<PanelPeriods>(DEFAULT_PERIODS)
   const [datasets, setDatasets] = useState<Partial<Record<LastFmPeriod, LastFmTaste>>>(
     music ? { overall: music } : {},
   )
@@ -234,12 +235,34 @@ export default function MusicTasteSection({ music }: Props) {
   const currentMusic = refreshedMusic ?? music
 
   useEffect(() => {
-    const next = { ...periods }
-    for (const key of Object.keys(next) as PanelKey[]) {
-      const saved = window.localStorage.getItem('music-period-' + key)
-      if (saved === '7day' || saved === '1month' || saved === 'overall') next[key] = saved
+    let cancelled = false
+
+    async function restoreSavedPeriods() {
+      const next = { ...DEFAULT_PERIODS }
+      for (const key of Object.keys(next) as PanelKey[]) {
+        const saved = window.localStorage.getItem('music-period-' + key)
+        if (saved === '7day' || saved === '1month' || saved === 'overall') next[key] = saved
+      }
+
+      const periodsToLoad = [...new Set(Object.values(next).filter((period) => period !== 'overall'))]
+      const fetched = await Promise.all(
+        periodsToLoad.map(async (period) => {
+          const response = await fetch('/api/music?period=' + period + '&page=1&limit=20')
+          if (!response.ok) return null
+          return [period, await response.json() as LastFmTaste] as const
+        }),
+      )
+
+      if (cancelled) return
+      setPeriods(next)
+      const loaded = fetched.filter((entry): entry is readonly ['7day' | '1month', LastFmTaste] => entry !== null)
+      if (loaded.length > 0) {
+        setDatasets((current) => ({ ...current, ...Object.fromEntries(loaded) }))
+      }
     }
-    setPeriods(next)
+
+    void restoreSavedPeriods()
+    return () => { cancelled = true }
   }, [])
 
   async function changePeriod(key: PanelKey, value: string) {

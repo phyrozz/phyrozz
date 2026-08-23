@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { useEffect, useState } from 'react'
 import DropdownMenu from '@/components/DropdownMenu'
@@ -15,19 +15,22 @@ const NAV_LINKS = [
 
 export default function Navbar({ name }: { name?: string | null }) {
   const [open, setOpen] = useState(false)
-  const [xpMode, setXpMode] = useState(false)
+  const [theme, setTheme] = useState('pastel')
 
   useEffect(() => {
-    const enabled = window.localStorage.getItem('theme') === 'xp'
-    setXpMode(enabled)
-    document.documentElement.classList.toggle('theme-xp', enabled)
+    const saved = window.localStorage.getItem('theme')
+    const next = saved === 'xp' || saved === 'aero' ? saved : 'pastel'
+    setTheme(next)
+    document.documentElement.classList.toggle('theme-xp', next === 'xp')
+    document.documentElement.classList.toggle('theme-aero', next === 'aero')
   }, [])
 
   function selectTheme(value: string) {
-    const next = value === 'xp'
-    setXpMode(next)
-    window.localStorage.setItem('theme', next ? 'xp' : 'pastel')
-    document.documentElement.classList.toggle('theme-xp', next)
+    const next = value === 'xp' || value === 'aero' ? value : 'pastel'
+    setTheme(next)
+    window.localStorage.setItem('theme', next)
+    document.documentElement.classList.toggle('theme-xp', next === 'xp')
+    document.documentElement.classList.toggle('theme-aero', next === 'aero')
   }
 
   return (
@@ -58,10 +61,11 @@ export default function Navbar({ name }: { name?: string | null }) {
         </ul>
 
         <DropdownMenu
-          value={xpMode ? 'xp' : 'pastel'}
+          value={theme}
           options={[
             { value: 'pastel', label: 'Pastel' },
             { value: 'xp', label: 'Windows XP' },
+            { value: 'aero', label: 'Aero' },
           ]}
           onChange={selectTheme}
           icon={<ControlPanel size={16} />}

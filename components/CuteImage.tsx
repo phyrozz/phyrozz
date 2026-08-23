@@ -21,6 +21,7 @@ export default function CuteImage({
   src,
   alt,
   fill,
+  loading = 'eager',
   onLoad,
   onError,
   ...props
@@ -52,6 +53,7 @@ export default function CuteImage({
         src={src}
         alt={alt}
         fill={fill}
+        loading={loading}
         className={`${className} ${imageClassName}`}
         onLoad={(event) => {
           setLoaded(true)
