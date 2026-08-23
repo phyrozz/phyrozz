@@ -36,6 +36,20 @@ const FILES: Record<XPIconName, string> = {
   Next: 'Forward.png', Refresh: 'IE Refresh.png', 'Folder Opened': 'Folder Opened.png', 'Control Panel': 'Control Panel.png', Delete: 'Delete.png',
 }
 
+const AERO_FILES: Record<XPIconName, string> = {
+  'Windows Update': 'netcenter_7.png', Home: 'imageres_162.png', Briefcase: 'imageres_130.png', 'My Computer': 'imageres_109.png',
+  Music: 'wmpshare_IDR_MAINFRAME.png', Important: 'imageres_81.png', Palette: 'mspaint_2.png',
+  Menu: 'oobefldr_101.png', Exit: 'imageres_98.png', 'Map Network Drive': 'imageres_152.png',
+  Email: 'imageres_20.png', Phone: 'networkexplorer_120.png', 'Date and Time': 'dfrgui_137.png',
+  Download: 'shell32_16761.png', 'Internet Explorer 6': 'shell32_16744.png', Link: 'shell32_16744.png',
+  Monitor: 'imageres_101.png', Star: 'SLUI_3.png', Globe: 'netcenter_7.png',
+  Building: 'imageres_114.png', Smile: 'mstscax_13413.png', Flower: 'desk_40.png',
+  Theater: 'wmpshare_IDR_MAINFRAME.png', Search: 'imageres_177.png', Heart: 'imageres_115.png',
+  Calendar: 'WinCal_100.png', Disc: 'imageres_61.png', Play: 'sud_5.png',
+  Radio: 'mblctr_170.png', Headphones: 'SndVolSSO_124.png', Flame: 'imageres_30.png',
+  Lightbulb: 'shell32_1001.png', Quote: 'TabletPC_10204.png', Previous: 'msctf_401.png',
+  Next: 'netshell_1607.png', Refresh: 'shell32_16739.png', 'Folder Opened': 'imageres_3.png', 'Control Panel': 'imageres_114.png', Delete: 'imageres_89.png',
+}
 interface Props {
   name: XPIconName
   size?: number
@@ -47,16 +61,10 @@ interface Props {
 
 export default function XPIcon({ name, size = 16, className = '', style, alt = '', ...ariaProps }: Props) {
   return (
-    <img
-      src={'/xp-icons/' + encodeURIComponent(FILES[name])}
-      alt={alt}
-      width={size}
-      height={size}
-      className={'xp-only-icon shrink-0 ' + className}
-      style={{ imageRendering: 'pixelated', ...style }}
-      aria-hidden={alt ? undefined : true}
-      {...ariaProps}
-    />
+    <>
+      <img src={'/xp-icons/' + encodeURIComponent(FILES[name])} alt={alt} width={size} height={size} className={'xp-only-icon shrink-0 ' + className} style={{ imageRendering: 'pixelated', ...style }} aria-hidden={alt ? undefined : true} {...ariaProps} />
+      <img src={'/aero-icons/' + encodeURIComponent(AERO_FILES[name])} alt={alt} width={size} height={size} className={'aero-only-icon shrink-0 ' + className} style={style} aria-hidden={alt ? undefined : true} {...ariaProps} />
+    </>
   )
 }
 
