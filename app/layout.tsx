@@ -25,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${nunito.variable} ${pacifico.variable} h-full`}>
+    <html lang="en" className={`${nunito.variable} ${pacifico.variable} h-full theme-pastel`}>
       <body className="min-h-full flex flex-col antialiased">{children}</body>
     </html>
   )

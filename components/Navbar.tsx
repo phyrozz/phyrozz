@@ -1,8 +1,9 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { Code2 } from 'lucide-react'
 import DropdownMenu from '@/components/DropdownMenu'
-import { Home, Briefcase, Monitor, Palette, Flower2, Menu, X, Music2, ControlPanel, WindowsUpdate } from '@/components/XPIcon'
+import { Home, Briefcase, Monitor, Palette, Flower2, Menu, X, Music2, ControlPanel } from '@/components/XPIcon'
 
 const NAV_LINKS = [
   { href: '#hero', label: 'Home', Icon: Home },
@@ -19,16 +20,18 @@ export default function Navbar({ name }: { name?: string | null }) {
 
   useEffect(() => {
     const saved = window.localStorage.getItem('theme')
-    const next = saved === 'xp' || saved === 'aero' ? saved : 'pastel'
+    const next = saved === 'xp' || saved === 'aero' || saved === 'studio' ? saved : 'pastel'
     setTheme(next)
+    document.documentElement.classList.toggle('theme-pastel', next === 'pastel')
     document.documentElement.classList.toggle('theme-xp', next === 'xp')
     document.documentElement.classList.toggle('theme-aero', next === 'aero')
   }, [])
 
   function selectTheme(value: string) {
-    const next = value === 'xp' || value === 'aero' ? value : 'pastel'
+    const next = value === 'xp' || value === 'aero' || value === 'studio' ? value : 'pastel'
     setTheme(next)
     window.localStorage.setItem('theme', next)
+    document.documentElement.classList.toggle('theme-pastel', next === 'pastel')
     document.documentElement.classList.toggle('theme-xp', next === 'xp')
     document.documentElement.classList.toggle('theme-aero', next === 'aero')
   }
@@ -37,13 +40,8 @@ export default function Navbar({ name }: { name?: string | null }) {
     <nav className="sticky top-0 z-50 bg-cream/90 backdrop-blur-sm border-b-2 border-dashed border-brown-light/40 shadow-sm">
       <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
         <a href="#hero" className="flex items-center gap-2 font-bold text-brown hover:opacity-80 transition-opacity">
-          <WindowsUpdate size={20} className="text-honey shrink-0" aria-hidden="true" />
-          <span
-            className="hidden sm:inline truncate max-w-[160px]"
-            style={{ fontFamily: 'var(--font-pacifico), cursive', fontSize: '1.1rem' }}
-          >
-            Reimu Dev
-          </span>
+          <Code2 size={21} strokeWidth={2.4} className="text-honey shrink-0" aria-hidden="true" />
+          <span className="nav-wordmark">{'Reimu Dev'}<b>.</b></span>
         </a>
 
         <ul className="hidden lg:flex gap-1">
@@ -64,6 +62,7 @@ export default function Navbar({ name }: { name?: string | null }) {
           value={theme}
           options={[
             { value: 'pastel', label: 'Pastel' },
+            { value: 'studio', label: 'Studio' },
             { value: 'xp', label: 'Windows XP' },
             { value: 'aero', label: 'Aero' },
           ]}
